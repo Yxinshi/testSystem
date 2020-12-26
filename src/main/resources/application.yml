@@ -1,0 +1,75 @@
+#指定端口号
+server:
+  port: 8081
+#  servlet:
+#    jsp:
+#      init-parameters: true
+spring:
+  application:
+    name: biddingfd
+  #rabbitmq
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: xys
+#    password: 123
+#    virtual-host: /myVhost
+#    #开启消费重试控制
+#    listener:
+#      simple:
+#        retry:
+#          enabled: true
+#          max-attempts: 3
+#          initial-interval: 3000ms
+#    #消息重试
+#    publisher-returns: true
+  #热部署   对前端修改后 不再需要一次次重启项目
+  devtools:
+    restart:
+      enabled: true
+  #mysql数据库连接
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://114.55.92.94:3307/paimai?useUnicode=true&allowMultiQueries=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: admin123
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      pool-name: BiddingfdHikariPool
+      maximum-pool-size: 12
+      connection-timeout: 60000
+      minimum-idle: 10
+      idle-timeout: 500000
+      max-lifetime: 540000
+      connection-test-query: SELECT 1
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    #配置redis
+  redis:
+    host: 8.131.85.12
+    port: 6379
+    password: #zf123
+  mvc:
+    static-path-pattern: /static/**
+    view:
+      prefix: /jsps/
+      suffix: .jsp
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+  type-aliases-package: com.bgs.biddingfd.pojo
+#打印sql语句
+logging:
+  level:
+    com:
+      bgs:
+        biddingfd: debug
