@@ -6,7 +6,7 @@ server:
 #      init-parameters: true
 spring:
   application:
-    name: biddingfd
+    name: testSystem
   #rabbitmq
 #  rabbitmq:
 #    host: localhost
@@ -66,10 +66,10 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
       id-type: auto
-  type-aliases-package: com.bgs.biddingfd.pojo
+  type-aliases-package: com.bgs.examinationbackstage.pojo
 #打印sql语句
 logging:
   level:
     com:
       bgs:
-        biddingfd: debug
+        examinationbackstage: debug
