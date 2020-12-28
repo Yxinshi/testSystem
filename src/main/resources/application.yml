@@ -13,9 +13,9 @@ spring:
   #mysql数据库连接  114.55.92.94:3307/ paimai   admin123
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/examination?useUnicode=true&allowMultiQueries=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://114.55.92.94:3307/examination?useUnicode=true&allowMultiQueries=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
-    password: 123
+    password: admin123
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       pool-name: BiddingfdHikariPool
@@ -38,7 +38,7 @@ spring:
     view:
       prefix: /jsps/
       suffix: .jsp
-mybatis:
+mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
