@@ -18,7 +18,7 @@
 
 
     <resultMap id="map" type="com.bgs.examinationbackstage.pojo.Permission" autoMapping="true">
-        <id property="pId" column="z1id" />
+         <id property="pId" column="z1id" />
         <result  property="pName" column="z1name" />
         <result  property="parentId" column="z1pid" />
         <result  property="path" column="z1path" />

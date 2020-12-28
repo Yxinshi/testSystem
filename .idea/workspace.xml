@@ -2,64 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0ffb5efb-0dab-4314-b53d-e3ecb633de8c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/config/SwaggerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/interceptor/DataBaseInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/mapper/UserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/pojo/AccessTokenDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/pojo/AuthTokenModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/service/serviceImp/UserServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/utils/BaseResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/utils/Constant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/utils/EncryptUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/utils/SnowFlake.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/utils/StatusCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/css/login.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/css/password.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/css/zhuce.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/Thumbs.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/acc-safe-ico.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/askPic.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/bannerNew.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/bg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/bk-login.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/bk-zhuce-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/btn-now.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/chat.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/footerBg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/headg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/line.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/line2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/line3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/login-image-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/login-image-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/login-image-3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/menu_prog_dot.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/selected.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/shape.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/slecd_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/slecd_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/sleeping.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/tel.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/user.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/yanzhengma.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/zhuce-image-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/zhuce-image-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/zhuce-image-3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/zhuce-over-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/zhuce-over-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/images/zhuce-over-3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/js/jquery-1.11.1.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/js/login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/myjs/login/js/zhuce.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/jsps/index.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/jsps/login.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/pojo/Permission.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/pojo/Permission.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/pojo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bgs/examinationbackstage/pojo/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,12 +130,24 @@
       <updated>1609122994348</updated>
       <workItem from="1609123001174" duration="3279000" />
       <workItem from="1609126419349" duration="14845000" />
-      <workItem from="1609157753344" duration="1497000" />
+      <workItem from="1609157753344" duration="1844000" />
     </task>
+    <task id="LOCAL-00001" summary="登录">
+      <created>1609159743881</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1609159743881</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="登录" />
+    <option name="LAST_COMMIT_MESSAGE" value="登录" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="74" key="#Inspections" timestamp="1609157895797">
@@ -214,6 +170,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1609151710252" />
+    <state x="264" y="9" key="CommitChangelistDialog2" timestamp="1609159738303">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="264" y="9" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1609159738303" />
     <state x="572" y="157" key="FileChooserDialogImpl" timestamp="1609136522795">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -262,6 +222,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="272" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1609136527841" />
+    <state x="361" y="149" key="Vcs.Push.Dialog.v2" timestamp="1609159747464">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="149" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1609159747464" />
     <state x="461" y="242" key="com.intellij.ide.util.TipDialog" timestamp="1609126422013">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
