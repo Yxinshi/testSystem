@@ -1,7 +1,10 @@
 package com.bgs.examinationbackstage.pojo;
 
 
+import lombok.Data;
 
+import java.util.List;
+@Data
 public class Permission {
 
   private long pId;
@@ -9,40 +12,8 @@ public class Permission {
   private String path;
   private long parentId;
 
-
-  public long getPId() {
-    return pId;
-  }
-
-  public void setPId(long pId) {
-    this.pId = pId;
-  }
+  private List<Permission> perList;
 
 
-  public String getPName() {
-    return pName;
-  }
-
-  public void setPName(String pName) {
-    this.pName = pName;
-  }
-
-
-  public String getPath() {
-    return path;
-  }
-
-  public void setPath(String path) {
-    this.path = path;
-  }
-
-
-  public long getParentId() {
-    return parentId;
-  }
-
-  public void setParentId(long parentId) {
-    this.parentId = parentId;
-  }
 
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bgs.examinationbackstage.mapper.UserMapper">
+
+    <select id="selUserInfoByName" resultType="com.bgs.examinationbackstage.pojo.User">
+        select name from user where name=#{name};
+    </select>
+
+    <select id="userLogin" resultType="com.bgs.examinationbackstage.pojo.User">
+        SELECT distinct u.* FROM `user` u
+        LEFT JOIN role r ON u.role_id = r.role_id
+        LEFT JOIN role_permession rp ON rp.role_id=r.role_id
+        LEFT JOIN permission p ON p.p_id=rp.p_id
+        WHERE u.`name`=#{name} AND u.`password`=#{password}
+    </select>
+
+
+    <resultMap id="map" type="com.bgs.examinationbackstage.pojo.Permission" autoMapping="true">
+        <id property="pId" column="z1id" />
+        <result  property="pName" column="z1name" />
+        <result  property="parentId" column="z1pid" />
+        <result  property="path" column="z1path" />
+        <collection property="perList" ofType="com.bgs.examinationbackstage.pojo.Permission">
+            <id property="pId" column="peid"/>
+            <result property="pName" column="pename"/>
+            <result property="parentId" column="pepid"/>
+            <result property="path" column="pepath"/>
+        </collection>
+    </resultMap>
+    <select id="showLeftList" resultMap="map">
+        SELECT DISTINCT permission.p_id z1id,permission.p_name z1name,permission.parent_id z1pid,permission.path z1path,
+        pe.p_id peid,pe.p_name pename,pe.parent_id pepid,pe.path pepath
+	    from
+         (SELECT p.* from  role_permession rp
+        left join permission p on rp.p_id = p.p_id where rp.role_id=#{id}) as permission
+        LEFT JOIN permission pe on permission.p_id=pe.parent_id
+		ORDER BY permission.p_id
+    </select>
+
+
+
+
+
+
+
+
+
+</mapper>
