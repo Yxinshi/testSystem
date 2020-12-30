@@ -41,5 +41,25 @@
         select * from user
     </select>
 
+    <insert id="examinationexamination">
+        <selectKey keyProperty="test_paper_id" resultType="Integer" order="AFTER">
+            select  last_insert_id()
+        </selectKey>
+        insert into  examination_paper  VALUES
+        (0,
+        #{name},
+        #{dateExam},
+        #{startExam},
+        #{finishExam},
+        1,
+        #{time},
+        #{jin},
+        #{singleWay},
+        #{pass},
+        #{fullMark},
+        #{number},
+        0,0,0
+        );
 
+    </insert>
 </mapper>

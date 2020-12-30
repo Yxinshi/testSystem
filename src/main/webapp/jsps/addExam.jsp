@@ -212,7 +212,7 @@
                                 <div class="block">
                                     <div class="block">
                                         <span class="demonstration">出题方式 :</span>&nbsp;
-                                        <span style="font-size: 16px">抽选试题</span>
+                                        <span class="text" style="font-size: 16px" v-model="tissue.singleWay"></span>
                                     </div>
                                 </div>
                             </template>
@@ -525,7 +525,7 @@
                 axios
                     .post("/kaoshi/examination/",{tissue:this.tissue,userEx:this.multipleSelection})
                     .then(function (res) {
-                        _this.tableData = res.data;
+
                     })
 
             },
@@ -536,6 +536,7 @@
             /*固定试卷模板*/
             FixedPapers(){
                 this.dialogVisible1 = false;
+                this.tissue.singleWay = '固定试题';
                 this.issue = 2;
                 this.jiben1='display:none';
                 this.jiben2='display:block';
@@ -546,6 +547,7 @@
             /*抽选试题模板*/
             QuestionPapers(){
                 this.dialogVisible1 = false;
+                this.tissue.singleWay = '抽选试题';
                 this.issue = 2;
                 this.jiben1='display:none';
                 this.jiben2='display:none';

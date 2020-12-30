@@ -37,8 +37,38 @@ public class ZhuzhiServiceImp  implements ZhuzhiService {
         return false;
     }
 
+
+
     @Override
     public List<User> addUser() {
         return zhuzhiMapper.addUser();
+    }
+
+
+    /**
+     * 添加试卷操作
+     * */
+    @Transactional
+    @Override
+    public List<Map<String, Object>> examinationexamination(Map<String, Object> map) {
+        Map<String, Object> tissue = (Map<String, Object>) map.get("tissue");
+        List<User> users = (List<User>) map.get("userEx");
+        System.out.println(users);
+
+        String s = String.valueOf(tissue.get("dateExam"));
+        String s1 = s.substring(0, 10);
+        List<Integer> str = (List<Integer>) tissue.get("classify");
+        String jin = "";
+        for (Integer ks: str) {
+            jin = jin + ks;
+        }
+        tissue.put("dateExam", s1);
+        tissue.put("number", users.size());
+        tissue.put("jin", jin);
+        boolean b = zhuzhiMapper.examinationexamination(tissue);
+        System.out.println("自增"+map);
+        System.out.println(((Map<String, Object>) map.get("tissue")).get("test_paper_id"));
+
+        return null;
     }
 }

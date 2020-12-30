@@ -17,4 +17,6 @@ public interface ZhuzhiMapper {
     boolean deleteAnswer(Object id);
 
     List<User> addUser();
+
+    boolean examinationexamination(Map<String, Object> tissue);
 }

@@ -12,4 +12,6 @@ public interface ZhuzhiService {
     boolean deletePaper(Object id);
 
     List<User> addUser();
+
+    List<Map<String,Object>> examinationexamination(Map<String,Object> map);
 }
