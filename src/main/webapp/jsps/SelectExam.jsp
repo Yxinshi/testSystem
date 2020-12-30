@@ -34,11 +34,13 @@
             <span class="demonstration">试卷名称</span>
             <el-input style="width: 260px" v-model="paperName" placeholder="请输入内容"></el-input>
         </el-col>
+    </el-row>
 
+    <el-row>
         <el-col :span="12">
             <span class="demonstration">考试状态</span>
             <template>
-                <el-select v-model="paperStatic" placeholder="请选择">
+                <el-select v-model="paperStatic" clearable  placeholder="请选择">
                     <el-option
                             v-for="item in options"
                             :key="item.value"
@@ -49,14 +51,16 @@
             </template>
         </el-col>
         <el-col :span="12">
-            <el-button size="small" type="success" icon="el-icon-search" @click="">搜索</el-button>
-            <el-button size="small" type="primary" icon="el-icon-refresh-right">重置</el-button>
+            <el-button size="small" type="success" icon="el-icon-search" @click="searchPaper()">搜索</el-button>
+            <el-button size="small" type="primary" icon="el-icon-refresh-right" @click="resetPaper()">重置</el-button>
         </el-col>
+    </el-row>
+
+    <el-row>
         <el-col :span="12">
             <el-button size="small" type="success" icon="el-icon-search">新增考试</el-button>
         </el-col>
     </el-row>
-
     <el-table
             highlight-current-row
             border
@@ -66,7 +70,7 @@
         <el-table-column align="left" prop="itemId" label="项目id" show-overflow-tooltip v-if="show"></el-table-column>
         <el-table-column align="left" prop="test_paper_name" label="考卷名称" show-overflow-tooltip></el-table-column>
         <el-table-column align="left" prop="test_paper_date" label="考试日期" show-overflow-tooltip></el-table-column>
-        <el-table-column align="left" prop="test_paper_start_time" label="考试时间" show-overflow-tooltip></el-table-column>
+        <el-table-column align="left" prop="times" label="考试时间" show-overflow-tooltip></el-table-column>
         <el-table-column  label="状态">
             <template slot-scope="scope">
                 <el-button v-if="scope.row.test_paper_state == 1"
@@ -87,31 +91,34 @@
             </template>
         </el-table-column>
         <el-table-column  label="操作">
-            <template slot-scope="scope" v-if="scope.row.test_paper_state == 1">
-                <el-button >
+            <template slot-scope="scope" >
+                <span v-if="scope.row.test_paper_state == 1">
+                     <el-button  @click="detailsPaper()">
                     查看详情
                 </el-button>
-                <el-button >
+                <el-button @click="deletePaper(scope.row.test_paper_id)">
                     删除
                 </el-button>
-                <el-button >
+                <el-button  @click="compilePaper()">
                     编辑
                 </el-button>
-            </template>
-            <template slot-scope="scope" v-if="scope.row.test_paper_state == 2">
-                <el-button >
+                </span>
+                <span v-if="scope.row.test_paper_state == 2">
+                <el-button @click="detailsPaper()">
                     查看详情
                 </el-button>
-            </template>
-            <template slot-scope="scope" v-if="scope.row.test_paper_state == 3">
-                <el-button >
+                </span>
+                <span v-if="scope.row.test_paper_state == 3">
+                   <el-button @click="detailsPaper()">
                     查看详情
                 </el-button>
-                <el-button >
+                <el-button  @click="deletePaper(scope.row.test_paper_id)">
                     删除
                 </el-button>
+                </span>
             </template>
         </el-table-column>
+
     </el-table>
     <el-pagination
             @size-change="handleSizeChange"
@@ -122,6 +129,7 @@
             layout="total, sizes, prev, pager, next, jumper"
             :total="userList.length">
     </el-pagination>
+
 </div>
 
 </body>
@@ -136,6 +144,8 @@
                 currentPage:1, //初始页
                 pagesize:10,    //    每页的数据
                 timing: '',
+                paperName:'',
+                paperStatic:'',
                 options: [{
                     value: '1',
                     label: '未开始'
@@ -154,13 +164,32 @@
         mounted: function () {
             var _this = this;
             axios
-                .post("/kaoshi/jurisdiction/")
+                .post("/kaoshi/jurisdiction/",{timing:_this.timing,paperName:_this.paperName,paperStatic:_this.paperStatic})
                 .then(function (res) {
                     _this.userList = res.data;
                 })
         },
         /*方法函数  事件等*/
         methods: {
+            searchPaper(){
+                var _this = this;
+                axios
+                    .post("/kaoshi/jurisdiction/",{timing:_this.timing,paperName:_this.paperName,paperStatic:_this.paperStatic})
+                    .then(function (res) {
+                        _this.userList = res.data;
+                    })
+            },
+            resetPaper(){
+                    this.timing = "";
+                    this.paperName = '',
+                    this.paperStatic = '';
+            },
+            deletePaper(id){
+                axios
+                    .post("/kaoshi/deletePaper/",{id:id})
+                    .then(function (res) {
+                    })
+            },
             // 初始页currentPage、初始每页数据数pagesize和数据data
             handleSizeChange: function (size) {
                 this.pagesize = size;

@@ -1,6 +1,7 @@
 package com.bgs.examinationbackstage.pojo;
 
 
+import io.swagger.models.auth.In;
 import lombok.Data;
 
 @Data
@@ -13,7 +14,7 @@ public class User {
   private long accountNumber;
   private String password;
   private String phone;
-  private long roleId;
+  private Integer roleId;
 
 
 

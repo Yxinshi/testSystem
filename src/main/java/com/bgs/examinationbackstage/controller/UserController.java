@@ -1,6 +1,7 @@
 package com.bgs.examinationbackstage.controller;
 
 import com.bgs.examinationbackstage.pojo.AuthTokenModel;
+import com.bgs.examinationbackstage.pojo.Permission;
 import com.bgs.examinationbackstage.pojo.User;
 import com.bgs.examinationbackstage.service.UserService;
 import com.bgs.examinationbackstage.utils.BaseResponse;
@@ -41,8 +42,7 @@ public class UserController {
         }
         return baseResponse;
     }*/
-    @RequestMapping("/userLogin")
-    @ResponseBody
+    @GetMapping("/userLogin")
     @ApiOperation("用户登录")
     public BaseResponse userLogin(@RequestParam String name, @RequestParam String password, HttpSession
                                   session){
@@ -56,16 +56,21 @@ public class UserController {
             }
     }
 
-    @ResponseBody
-    @RequestMapping("/showLeftList")
+
+    @GetMapping("/showLeftList")
     @ApiOperation("加载左侧导航栏")
-    public BaseResponse showLeftList(HttpSession session,Integer id){
+    public List<Permission> showLeftList(HttpSession session){
         User user = (User) session.getAttribute("user");
-        List<User> list = userService.showLeftList(/*user.getId()*/id);
-        if (list!=null){
+        List<Permission> list = userService.showLeftList(user.getRoleId());
+        return list;
+       /* if (list!=null){
             return new BaseResponse(200,"查询成功",list);
         }else {
             return new BaseResponse(-1,"失败");
-        }
+        }*/
     }
+
+
+
+
 }

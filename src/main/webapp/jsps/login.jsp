@@ -11,13 +11,7 @@
     <title>用户登录</title>
     <link type="text/css" rel="stylesheet" href="/static/myjs/login/css/login.css" />
     <script type="text/javascript" src="/static/js/jquery-3.4.1.min.js"></script>
-    <script src="${pageContext.request.contextPath }/static/vue/vue.js"></script>
-    <!-- 引入样式 -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/static/element/index.css">
-    <!-- 引入组件库 -->
-    <script src="${pageContext.request.contextPath }/static/element/index.js"></script>
-    <script src="${pageContext.request.contextPath }/static/vue/axios.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath }/static/vue/qs.js"></script>
+
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -74,12 +68,13 @@
         }else {
             $.ajax({
                 url:'/user/userLogin',
-                type:'post',
+                type:'get',
                 data:{name:name,password:password},
                 dataType:'json',
                 success:function (data) {
                     if (data){
                         alert("登录成功")
+                        location.href="/jsps/index.jsp"
                     }
                 },
                 error:function (err) {
