@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bgs.examinationbackstage.mapper.BiMapper">
+
+    <select id="selectBankBi" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
+
+        select
+          ep.test_paper_name,qb.* from
+			question_bank qb
+				LEFT JOIN test_paper_questions tpq
+					on qb.question_bank_id = tpq.test_questions_id
+						LEFT JOIN examination_paper  ep
+							on ep.test_paper_id = tpq.test_paper_id
+
+    </select>
+
+</mapper>
