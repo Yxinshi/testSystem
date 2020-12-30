@@ -13,9 +13,9 @@ spring:
   #mysql数据库连接  114.55.92.94:3307/ paimai   admin123
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://114.55.92.94:3307/examination?useUnicode=true&allowMultiQueries=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://8.131.85.12:3306/examination?useUnicode=true&allowMultiQueries=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
-    password: admin123
+    password: root
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       pool-name: BiddingfdHikariPool

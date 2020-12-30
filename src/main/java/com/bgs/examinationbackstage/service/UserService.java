@@ -1,6 +1,7 @@
 package com.bgs.examinationbackstage.service;
 
 import com.bgs.examinationbackstage.pojo.AuthTokenModel;
+import com.bgs.examinationbackstage.pojo.Permission;
 import com.bgs.examinationbackstage.pojo.User;
 import com.bgs.examinationbackstage.utils.BaseResponse;
 
@@ -14,5 +15,5 @@ public interface UserService {
 
     BaseResponse validateToken(String accessToken);
 
-    List<User> showLeftList(Integer id);
+    List<Permission> showLeftList(Integer id);
 }

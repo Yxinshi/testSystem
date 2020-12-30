@@ -17,8 +17,8 @@
     </select>
 
 
-    <!--<resultMap id="map" type="com.bgs.examinationbackstage.pojo.Permission" autoMapping="true">
-        <id property="pId" column="z1id" />
+    <resultMap id="map" type="com.bgs.examinationbackstage.pojo.Permission" autoMapping="true">
+         <id property="pId" column="z1id" />
         <result  property="pName" column="z1name" />
         <result  property="parentId" column="z1pid" />
         <result  property="path" column="z1path" />
@@ -28,8 +28,8 @@
             <result property="parentId" column="pepid"/>
             <result property="path" column="pepath"/>
         </collection>
-    </resultMap>-->
-    <select id="showLeftList" resultType="com.bgs.examinationbackstage.pojo.Permission">
+    </resultMap>
+    <select id="showLeftList" resultMap="map">
         SELECT DISTINCT permission.p_id z1id,permission.p_name z1name,permission.parent_id z1pid,permission.path z1path,
         pe.p_id peid,pe.p_name pename,pe.parent_id pepid,pe.path pepath
 	    from

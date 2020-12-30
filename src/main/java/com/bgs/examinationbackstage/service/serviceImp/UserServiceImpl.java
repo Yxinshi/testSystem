@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.bgs.examinationbackstage.mapper.UserMapper;
 import com.bgs.examinationbackstage.pojo.AccessTokenDto;
 import com.bgs.examinationbackstage.pojo.AuthTokenModel;
+import com.bgs.examinationbackstage.pojo.Permission;
 import com.bgs.examinationbackstage.pojo.User;
 import com.bgs.examinationbackstage.service.UserService;
 import com.bgs.examinationbackstage.utils.BaseResponse;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> showLeftList(Integer id) {
+    public List<Permission> showLeftList(Integer id) {
         return userMapper.showLeftList(id);
     }
 
