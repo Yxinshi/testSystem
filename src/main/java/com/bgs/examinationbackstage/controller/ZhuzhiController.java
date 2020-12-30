@@ -63,7 +63,7 @@ public class ZhuzhiController {
     /**
      * 创建试卷信息
      * */
-    @RequestMapping("/examinationexamination")
+    @RequestMapping("/examination")
     public List<User>  examinationexamination(@RequestBody Map<String,Object> map) {
 
         System.out.println(map);
