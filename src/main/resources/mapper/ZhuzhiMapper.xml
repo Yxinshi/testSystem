@@ -5,17 +5,41 @@
 <mapper namespace="com.bgs.examinationbackstage.mapper.ZhuzhiMapper">
 
         <select id="Kaoshi" resultType="map">
-            select * from examination_paper
+             select *,CONCAT_WS('-',test_paper_start_time,test_paper_end_time) as times  from examination_paper
+             <where>
+                 <if test="paperName!=null and paperName!='' ">
+                     test_paper_name like '%${paperName}%'
+                 </if>
+                 <if test="start!=null and start!=''and finish!=''and finish!='' ">
+                     and test_paper_date between #{start} AND #{finish}
+                 </if>
+                 <if test="paperStatic!=null and paperStatic!='' ">
+                     and test_paper_state = #{paperStatic}
+                 </if>
+             </where>
         </select>
 
 
+    <delete id="deletePaper">
+        delete from examination_paper where test_paper_id = #{id}
+    </delete>
+
+    <delete id="deleteQues">
+        delete from test_paper_questions where test_paper_id = #{id}
+    </delete>
+
+    <delete id="deleteUser">
+        delete from test_paper_user where test_paper_id = #{id}
+    </delete>
+
+    <delete id="deleteAnswer">
+        delete from examination_answer where examination_id = #{id}
+    </delete>
 
 
-
-
-
-
-
+    <select id="addUser" resultType="User">
+        select * from user
+    </select>
 
 
 </mapper>
