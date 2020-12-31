@@ -18,9 +18,7 @@
 <body>
 
 <form class="form-horizontal" role="form">
-    <div style="height: 20px"></div>
-
-    <div style="width: 1300px; height: 850px; border:1px solid rgba(0,0,0,0.6); float: left; margin: 50px 0px 0px 60px; box-shadow: 0 0 8px black;">
+    <div style="width: 1300px; height: 780px; border:1px solid rgba(0,0,0,0.6); float: left; margin: 0px 0px 0px 50px; box-shadow: 0 0 8px black;">
         <h3 style="margin-bottom: 40px">试题库</h3>
 
         <div style="float: left">
@@ -33,21 +31,17 @@
         <div style="float: left">
             <span style="float: left; font-size: 17px; line-height: 34px; margin-left: 40px;">试题类型：</span>
             <select class="form-control date_1" id="xiala"  style="width: 100px; float: left;">
-                <option>1</option>
-                <option>2</option>
             </select>
         </div>
 
         <div style="float: left">
             <span style="float: left; font-size: 17px; line-height: 34px; margin-left: 40px;">试题分类：</span>
             <select class="form-control date_1" id="xiala2"  style="width: 100px; float: left;">
-                <option>1</option>
-                <option>2</option>
             </select>
         </div>
 
         <div style="float: left; margin-left: 40px;" id="temp3">
-            <input type="button" value="查询" class="btn-success btn" onclick="updata()">
+            <input type="button" value="查询" class="btn-success btn" onclick="mohuchaxun()">
             &nbsp;
             <input type="reset" value="重置"  class="btn-danger btn " >
 
@@ -62,7 +56,7 @@
 
         </div>
 
-        <div style="margin-top: 12%;margin-left: 40px;margin-right: 40px;height: 540px">
+        <div style="margin-top: 12%;margin-left: 40px;margin-right: 40px;height: 450px">
             <table  id="shiti_table"> </table>
         </div>
 
@@ -76,6 +70,8 @@
 
     $(function () {
         getll();
+        shitileixing();
+        shitifenlei();
     })
 
     //请求成功方法
@@ -105,23 +101,19 @@
                     var aa = {
                         "limit":params.limit, //每页显示的记录数
                         "offset":params.offset, //当前第几页
+
+                        "datetimestrat":$("#date_1").val(),
+                        "datetimeend":$("#date_2").val(),
+                        "xialakuang1":$("#xiala").val(),
+                        "xialakuang2":$("#xiala2").val(),
                     };
                     return aa;
             },
             columns: [
                 {checkbox: true,align: 'center',},
                 {field: "questionBankId", title: "试题ID", align: 'center'},
-                {title: '试题内容', field: '', align: 'center',
-                    formatter:function(value,row,index) {
-                        if(row.testPaperName==null){
-                            return "没有所对应的试卷";
-                        }else {
-                            return row.testPaperName;
-                        }
-                    }
-
-                    },
-                {title: '分类',    field: 'questionBankClassify',align: 'center'},
+                {title: '试题内容', field: 'questionBankContent', align: 'center' },
+                {title: '试题分类',    field: 'questionBankClassify',align: 'center'},
                 {title: '试题类型', field: 'questionBankType',align: 'center'},
                 {title: '标准答案', field: 'questionBankAnswer',align: 'center'},
                 {title: '分数',    field: 'questionBankScore',align: 'center'},
@@ -139,6 +131,53 @@
         });
     }
 
+    function  mohuchaxun() {
+        console.log(".....模糊查询")
+
+        $('#shiti_table').bootstrapTable("destroy");
+
+        getll();
+    }
+
+    //查询试题类型
+    function  shitileixing() {
+        $.ajax({
+            url: "/BiCon/selectQuestionBankType",
+            dataType: "json",
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: function(data) {  //这里就是我出错的地方
+                console.log(data.data)
+                var obj ="";
+                for (var j = 0; j < data.data.length; j++) {
+                    obj += "<option value=\""  + data.data[j].questionBankType + "\">" + data.data[j].questionBankType + "</option>";
+                }
+                $("#xiala").append("<option value='请选择'  >请选择...</option>"+ obj);
+
+            },
+        })
+    }
+
+    //查询试题分类（语文  数学 英语等。。。）
+    function  shitifenlei() {
+        $.ajax({
+            url: "/BiCon/selectQuestionBankClassify",
+            dataType: "json",
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: function(data) {  //这里就是我出错的地方
+                console.log(data.data)
+                var obj ="";
+                for (var j = 0; j < data.data.length; j++) {
+                    obj += "<option value=\""  + data.data[j].questionBankClassify + "\">" + data.data[j].questionBankClassify + "</option>";
+                }
+                $("#xiala2").append("<option value='请选择'  >请选择...</option>"+ obj);
+
+            },
+        })
+    }
 
 
 

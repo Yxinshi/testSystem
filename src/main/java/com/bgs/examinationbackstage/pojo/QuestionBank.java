@@ -1,7 +1,11 @@
 package com.bgs.examinationbackstage.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Data
 public class QuestionBank  extends  Page{
@@ -14,7 +18,10 @@ public class QuestionBank  extends  Page{
   private String questionBankType;
   private String questionBankAnswer;
   private String questionBankScore;
-  private java.sql.Timestamp questionBankCreationTime;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private Date questionBankCreationTime;
   private long userId;
   private String optionA;
   private String optionB;
