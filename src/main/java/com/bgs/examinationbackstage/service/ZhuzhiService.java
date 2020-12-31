@@ -14,4 +14,6 @@ public interface ZhuzhiService {
     List<User> addUser();
 
     List<Map<String,Object>> examinationexamination(Map<String,Object> map);
+
+    List<Map<String,Object>> ChooseQuestions();
 }
