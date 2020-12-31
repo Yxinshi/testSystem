@@ -186,7 +186,7 @@
                                         </el-table-column>
                                         <el-table-column  label="分数">
                                             <template slot-scope="scope" >
-                                                <el-input v-model="scope.row.fenshu" placeholder="请输入内容"></el-input>
+                                                <el-input v-model="scope.row.fenshu" @blur="blurS" placeholder="请输入内容"></el-input>
                                             </template>
                                         </el-table-column>
                                         <el-table-column  label="操作">
@@ -208,10 +208,15 @@
                         <el-col :span="24">
                             <template>
                                 <div class="block">
-                                    <span class="demonstration">及格分数</span>&nbsp;
-                                    <el-input style="width: 260px" v-model="time" placeholder="请输入内容"></el-input>
+                                    <span class="demonstration" style="font-size: 16px">及格分数</span>
+                                    <el-input v-model="tissue.pass" style="width: 260px"
+                                              oninput="value=value.replace(/[^\d]/g,'')"
+                                    >
+                                        <template slot="append">满分{{tissue.fullMark}}</template>
+                                    </el-input>
                                 </div>
                             </template>
+
                         </el-col>
                     </el-row>
                     <el-row>&nbsp;</el-row>
@@ -220,7 +225,7 @@
                             <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="returnPaper()">返回</el-button>
                         </el-col>
                         <el-col :span="6">
-                            <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="fulfillStep()">下一步</el-button>
+                            <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="fulfillStep()">完成提交</el-button>
                         </el-col>
                     </el-row>
                     <el-row>&nbsp;</el-row>
@@ -381,7 +386,7 @@
                             <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="returnPaper()">返回</el-button>
                         </el-col>
                         <el-col :span="6">
-                            <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="fulfillStep()">下一步</el-button>
+                            <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="fulfillStep()">完成提交</el-button>
                         </el-col>
                     </el-row>
                     <el-row>&nbsp;</el-row>
@@ -646,6 +651,14 @@
                     (parseInt(this.tissue.shortAnswerGrade)*parseInt(this.tissue.shortAnswerCount));
                 this.tissue.fullMark = j;
             },
+
+            blurS(){
+
+
+
+            },
+
+
             returnPaper(){
                 this.issue = 1;
                 this.jiben1='display:block';
