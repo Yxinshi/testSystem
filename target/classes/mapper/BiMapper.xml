@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bgs.examinationbackstage.mapper.BiMapper">
+
+    <select id="selectBankBi" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
+
+		select
+		qb.* from
+		question_bank qb
+		left join user u
+		on u.id = qb.user_id
+			<where>
+
+			  u.id = #{id}
+
+			<if test="datetimestrat!=null and datetimestrat!='' and datetimeend!=null and datetimeend!='' ">
+					and qb.question_bank_creation_time BETWEEN #{datetimestrat} AND #{datetimeend}
+			</if>
+
+			<if test="xialakuang1!=null and xialakuang1!='' and xialakuang1!='请选择' ">
+				and qb.question_bank_type = #{xialakuang1}
+			</if>
+
+			<if test="xialakuang2!=null and xialakuang2!='' and xialakuang2!='请选择' ">
+				and  qb.question_bank_classify = #{xialakuang2}
+			</if>
+			</where>
+
+    </select>
+
+
+	<select id="selectQuestionBankType" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
+
+		SELECT 	distinct question_bank_type from question_bank
+
+	</select>
+
+	<select id="selectQuestionBankClassify" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
+
+		select distinct question_bank_classify from question_bank
+
+	</select>
+
+
+</mapper>
