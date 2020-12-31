@@ -135,7 +135,7 @@
         }else{
             $("#iframeAdmin").attr("src",jsp);
             text = "<li class='layui-this' href='"+pname+"'>"+pname+"</li>";
-            $("#thistab").append(text)
+
         }
     }
 
