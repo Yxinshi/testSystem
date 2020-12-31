@@ -3,6 +3,7 @@ package com.bgs.examinationbackstage.service.serviceImp;
 import com.bgs.examinationbackstage.mapper.ZhuzhiMapper;
 import com.bgs.examinationbackstage.pojo.User;
 import com.bgs.examinationbackstage.service.ZhuzhiService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,8 +38,87 @@ public class ZhuzhiServiceImp  implements ZhuzhiService {
         return false;
     }
 
+
+
     @Override
     public List<User> addUser() {
         return zhuzhiMapper.addUser();
+    }
+
+
+    /**
+     * 添加试卷操作
+     * */
+    @Transactional
+    @Override
+    public List<Map<String, Object>> examinationexamination(Map<String, Object> map) {
+        Map<String, Object> tissue = (Map<String, Object>) map.get("tissue");
+        List<User> users = (List<User>) map.get("userEx");
+        String s = String.valueOf(tissue.get("dateExam"));
+        String s1 = s.substring(0, 10);
+        List<Integer> str = (List<Integer>) tissue.get("classify");
+        String jin = "";
+        for (Integer ks: str) {
+            jin = jin + ks;
+        }
+        tissue.put("dateExam", s1);
+        tissue.put("number", users.size());
+        tissue.put("jin", jin);
+        boolean b = zhuzhiMapper.examinationexamination(tissue);
+        System.out.println("自增"+map);
+        System.out.println();
+        Object o = ((Map<String, Object>) map.get("tissue")).get("test_paper_id");
+        map.put("tid", o);
+        boolean b1 = userAdd(map);
+        boolean b2 =questionsAdd(map);
+
+        return null;
+    }
+
+    @Override
+    public List<Map<String, Object>> ChooseQuestions() {
+        return zhuzhiMapper.ChooseQuestions();
+    }
+
+    /***
+     *  我哪有帅过  只不过是你爱过。
+     * @param map
+     * @return
+     */
+    @Transactional
+    public boolean questionsAdd(Map<String,Object> map) {
+        Map<String, Object> tissue = (Map<String, Object>) map.get("tissue");
+        tissue.get("singleCount"); /*单选题*/
+        tissue.get("multipleCount");/*多选题*/
+        tissue.get("gapFillingCount");/*填空题*/
+        tissue.get("judgeCount");/*判断题*/
+        tissue.get("shortAnswerCount");/*简答题*/
+        List<Integer> inLis = zhuzhiMapper.singleCount(Integer.parseInt(String.valueOf(tissue.get("singleCount"))));
+        List<Integer> inLis1 = zhuzhiMapper.multipleCount(Integer.parseInt(String.valueOf(tissue.get("multipleCount"))));
+        List<Integer> inLis2 = zhuzhiMapper.gapFillingCount(Integer.parseInt(String.valueOf(tissue.get("gapFillingCount"))));
+        List<Integer> inLis3 = zhuzhiMapper.judgeCount(Integer.parseInt(String.valueOf(tissue.get("judgeCount"))));
+        List<Integer> inLis4 = zhuzhiMapper.shortAnswerCount(Integer.parseInt(String.valueOf(tissue.get("shortAnswerCount"))));
+
+        zhuzhiMapper.singleCountAdd(inLis,map.get("tid"),tissue.get("singleGrade"));
+        zhuzhiMapper.multipleCountAdd(inLis1,map.get("tid"),tissue.get("multipleCount"));
+        zhuzhiMapper.gapFillingCountAdd(inLis2,map.get("tid"),tissue.get("gapFillingCount"));
+        zhuzhiMapper.judgeCountCountAdd(inLis3,map.get("tid"),tissue.get("judgeCount"));
+        zhuzhiMapper.shortAnswerCountCountAdd(inLis4,map.get("tid"),tissue.get("shortAnswerCount"));
+
+        return false;
+    }
+
+    @Transactional
+    public  boolean userAdd(Map<String, Object> map) {
+        System.out.println("人员添加"+map);
+        List<Map<String,Object>> userEx = (List<Map<String, Object>>) map.get("userEx");
+        for (Map<String,Object> use: userEx) {
+            use.put("tid", map.get("tid"));
+            boolean b = zhuzhiMapper.userAddKao(use);
+            if(!b){
+                return false;
+            }
+        }
+        return true;
     }
 }

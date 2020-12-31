@@ -41,5 +41,102 @@
         select * from user
     </select>
 
+    <insert id="examinationexamination">
+        <selectKey keyProperty="test_paper_id" resultType="Integer" order="AFTER">
+            select  last_insert_id()
+        </selectKey>
+        insert into  examination_paper  VALUES
+        (0,
+        #{name},
+        #{dateExam},
+        #{startExam},
+        #{finishExam},
+        1,
+        #{time},
+        #{jin},
+        #{singleWay},
+        #{pass},
+        #{fullMark},
+        #{number},
+        0,0,0,1
+        );
+    </insert>
 
+
+    <insert id="userAddKao">
+      insert into  test_paper_user (test_paper_id,user_id)  VALUES
+        (#{tid},
+        #{id}
+        )
+    </insert>
+
+    <select id="singleCount" resultType="Integer">
+        select  question_bank_id  from  question_bank where question_bank_type = '单选题' order by rand() limit #{singleCount}
+    </select>
+
+
+    <select id="multipleCount" resultType="Integer">
+        select  question_bank_id  from  question_bank where question_bank_type = '多选题' order by rand() limit #{multipleCount}
+    </select>
+
+
+    <select id="gapFillingCount" resultType="Integer">
+        select  question_bank_id  from  question_bank where question_bank_type = '填空题' order by rand() limit #{gapFillingCount}
+    </select>
+
+
+    <select id="judgeCount" resultType="Integer">
+        select  question_bank_id  from  question_bank where question_bank_type = '判断题' order by rand() limit #{judgeCount}
+    </select>
+
+    <select id="shortAnswerCount" resultType="Integer">
+        select  question_bank_id  from  question_bank where question_bank_type = '简答题' order by rand() limit #{shortAnswerCount}
+    </select>
+
+    <insert id="singleCountAdd">
+        insert into test_paper_questions (test_paper_id, test_questions_id ,test_grade)
+        values
+        <foreach collection="inLis" item="item" index="index" separator=",">
+            (#{tid}, #{item}, #{singleGrade})
+        </foreach>
+    </insert>
+
+
+    <insert id="multipleCountAdd">
+        insert into test_paper_questions (test_paper_id, test_questions_id ,test_grade)
+        values
+        <foreach collection="inLis" item="item" index="index" separator=",">
+            (#{tid}, #{item}, #{multipleCount})
+        </foreach>
+    </insert>
+
+    <insert id="gapFillingCountAdd">
+        insert into test_paper_questions (test_paper_id, test_questions_id ,test_grade)
+        values
+        <foreach collection="inLis" item="item" index="index" separator=",">
+            (#{tid}, #{item}, #{gapFillingCount})
+        </foreach>
+    </insert>
+
+
+    <insert id="judgeCountCountAdd">
+        insert into test_paper_questions (test_paper_id, test_questions_id ,test_grade)
+        values
+        <foreach collection="inLis" item="item" index="index" separator=",">
+            (#{tid}, #{item}, #{judgeCount})
+        </foreach>
+    </insert>
+
+
+    <insert id="shortAnswerCountCountAdd">
+        insert into test_paper_questions (test_paper_id, test_questions_id ,test_grade)
+        values
+        <foreach collection="inLis" item="item" index="index" separator=",">
+            (#{tid}, #{item}, #{shortAnswerCount})
+        </foreach>
+    </insert>
+
+        <select id="ChooseQuestions" resultType="map">
+            select  * from question_bank
+        </select>
 </mapper>

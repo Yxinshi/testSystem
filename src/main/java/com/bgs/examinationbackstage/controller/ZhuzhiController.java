@@ -65,9 +65,20 @@ public class ZhuzhiController {
      * */
     @RequestMapping("/examination")
     public List<User>  examinationexamination(@RequestBody Map<String,Object> map) {
-
         System.out.println(map);
+        List<Map<String,Object>> list = zhuzhiService.examinationexamination(map);
+        System.out.println(list);
         return null;
     }
 
+
+    /**
+     * 创建试卷 选试题信息
+     * */
+    @RequestMapping("/ChooseQuestions")
+    public List<Map<String,Object>>  ChooseQuestions() {
+        List<Map<String,Object>> list = zhuzhiService.ChooseQuestions();
+        System.out.println(list);
+        return list;
+    }
 }

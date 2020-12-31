@@ -138,8 +138,8 @@
                         <el-col :span="24">
                             <template>
                                 <div class="block">
-                                    <span class="demonstration">试题分类</span>&nbsp;
-                                    <el-input style="width: 260px" v-model="time" placeholder="请输入内容"></el-input>
+                                    <span class="demonstration">出题方式 :</span>&nbsp;
+                                    <span style="font-size: 18px">固定试卷</span>
                                 </div>
                             </template>
                         </el-col>
@@ -147,14 +147,62 @@
                     <el-row>&nbsp;</el-row>
                     <el-row>
                         <el-col :span="24">
-                            <template>
-                                <div class="block">
-                                    <span class="demonstration">出题方式 :</span>&nbsp;
-                                    <span style="font-size: 18px">固定试卷</span>
-                                </div>
-                            </template>
+                            <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="ChooseQuestions()">选择试题</el-button>
                         </el-col>
                     </el-row>
+
+                    <el-row>
+                        <el-col :span="3">
+
+                        </el-col>
+                        <el-col :span="21">
+                            <el-col :span="21">
+                                <template>
+                                    <el-table
+                                            ref="multipleT"
+                                            :data="settledTable"
+                                            tooltip-effect="dark"
+                                            style="width: 100%"
+                                            height="250">
+                                        <el-table-column
+                                                label="序号"
+                                                width="120">
+                                            <template slot-scope="scope">{{ scope.row.date }}</template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="question_bank_type"
+                                                label="试题类型"
+                                                width="120">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="question_bank_content"
+                                                label="试题内容"
+                                                show-overflow-tooltip>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="question_bank_classify"
+                                                label="试题分类"
+                                                show-overflow-tooltip>
+                                        </el-table-column>
+                                        <el-table-column  label="分数">
+                                            <template slot-scope="scope" >
+                                                <el-input v-model="scope.row.fenshu" placeholder="请输入内容"></el-input>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column  label="操作">
+                                            <template slot-scope="scope" >
+                                                <el-button
+                                                        size="mini"
+                                                        type="danger"
+                                                        @click="xvanzeDelete(scope.row)">删除</el-button>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                </template>
+                            </el-col>
+                        </el-col>
+                    </el-row>
+
                     <el-row>&nbsp;</el-row>
                     <el-row>
                         <el-col :span="24">
@@ -212,7 +260,7 @@
                                 <div class="block">
                                     <div class="block">
                                         <span class="demonstration">出题方式 :</span>&nbsp;
-                                        <span style="font-size: 16px">抽选试题</span>
+                                        <span class="text" style="font-size: 16px">抽取试题</span>
                                     </div>
                                 </div>
                             </template>
@@ -344,7 +392,7 @@
                     <div style="text-align: center;">
                         试卷创建成功
 
-                        <el-button size="medium" type="primary" icon="el-icon-user-solid">完成</el-button>
+                        <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="wancheng()" >完成</el-button>
 
                     </div>
                 </div>
@@ -405,7 +453,61 @@
             --------
             <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="QuestionPapers()">抽题试卷</el-button>
         </div>
+    </el-dialog>
 
+    <el-dialog
+            title="固定试题筛选"
+            :visible.sync="dialogVisible2"
+            width="45%"
+            :before-close="handleClose">
+        <div  style="text-align: center">
+            <template>
+                <el-table
+                        ref="multipleT"
+                        :data="questionsData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+                        tooltip-effect="dark"
+                        style="width: 100%"
+                        :row-key="getRowKeys"
+                        @selection-change="GudingSelectionChange">  <%--多选框的选择获取 当前一行的数据--%>
+                    <el-table-column
+                            :reserve-selection="true"
+                            type="selection"
+                            width="55">
+                    </el-table-column>
+                    <el-table-column
+                            prop="question_bank_content"
+                            label="试题内容"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            prop="question_bank_classify"
+                            label="分类"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            prop="question_bank_score"
+                            label="分数"
+                            show-overflow-tooltip>
+                    </el-table-column>
+                    <el-table-column
+                            prop="question_bank_type"
+                            label="试题类型"
+                            show-overflow-tooltip>
+                    </el-table-column>
+                </el-table>
+            </template>
+
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[5, 10, 20, 40]"
+                    :page-size="pagesize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="questionsData.length">
+            </el-pagination>
+
+        </div>
     </el-dialog>
 
 </div>
@@ -436,6 +538,7 @@
 
                 multipleSelection: [],
                 dialogVisible1:false,
+                dialogVisible2:false,
                 img:'',
                 designOptions:[
                     {value:1,label:'java'},
@@ -458,6 +561,11 @@
                    shortAnswerGrade:0,
                    fullMark:'',
                 },
+
+                settledTable:[],
+                questionsData:[],
+                currentPage:1, //初始页
+                pagesize:5,    //    每页的数据
             }
         },
 
@@ -468,6 +576,36 @@
         },
         /*方法函数  事件等*/
         methods: {
+            getRowKeys(row) {
+                return row.question_bank_id
+            },
+
+            // 初始页currentPage、初始每页数据数pagesize和数据data
+            handleSizeChange: function (size) {
+                this.pagesize = size;
+                console.log(this.pagesize)  //每页下拉显示数据
+            },
+            handleCurrentChange: function (currentPage) {
+                this.currentPage = currentPage;
+                console.log(this.currentPage)  //点击第几页
+            },
+
+        /* 固定试题----选择试题*/
+            ChooseQuestions(){
+                this.dialogVisible2 = true;
+                var _this = this;
+                if (_this.questionsData.length == 0){
+                    axios
+                        .post("/kaoshi/ChooseQuestions/")
+                        .then(function (res) {
+                            _this.questionsData = res.data;
+                        })
+                }
+            },
+
+            wancheng(){
+                location.href="${pageContext.request.contextPath}/jsps/SelectExam.jsp";
+            },
             blur(){
 
                 if (isNaN(parseInt(this.tissue.singleGrade))){
@@ -525,7 +663,7 @@
                 axios
                     .post("/kaoshi/examination/",{tissue:this.tissue,userEx:this.multipleSelection})
                     .then(function (res) {
-                        _this.tableData = res.data;
+
                     })
 
             },
@@ -536,6 +674,7 @@
             /*固定试卷模板*/
             FixedPapers(){
                 this.dialogVisible1 = false;
+                this.tissue.singleWay = '固定试题';
                 this.issue = 2;
                 this.jiben1='display:none';
                 this.jiben2='display:block';
@@ -546,6 +685,7 @@
             /*抽选试题模板*/
             QuestionPapers(){
                 this.dialogVisible1 = false;
+                this.tissue.singleWay = '抽选试题';
                 this.issue = 2;
                 this.jiben1='display:none';
                 this.jiben2='display:none';
@@ -576,6 +716,11 @@
                 }
 
             },
+
+            GudingSelectionChange(val){
+                console.log(val)
+                this.settledTable = val;
+            },
             //选择人员信息方法
             handleSelectionChange(val) {
                 console.log(val)
@@ -602,7 +747,12 @@
             handleDelete(item) {
                 console.log(item);
                 this.$refs.multipleTable && this.$refs.multipleTable.toggleRowSelection(item, false)
-            }
+            },
+
+            xvanzeDelete(item) {
+                console.log(item);
+                this.$refs.multipleT && this.$refs.multipleT.toggleRowSelection(item, false)
+    }
 
         }
     })

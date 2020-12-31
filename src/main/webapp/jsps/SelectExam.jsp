@@ -58,7 +58,7 @@
 
     <el-row>
         <el-col :span="12">
-            <el-button size="small" type="success" icon="el-icon-search">新增考试</el-button>
+            <el-button size="small" type="success" icon="el-icon-search" @click="xinzeng()">新增考试</el-button>
         </el-col>
     </el-row>
     <el-table
@@ -171,6 +171,9 @@
         },
         /*方法函数  事件等*/
         methods: {
+            xinzeng(){
+                location.href="${pageContext.request.contextPath}/jsps/addExam.jsp";
+            },
             searchPaper(){
                 var _this = this;
                 axios
