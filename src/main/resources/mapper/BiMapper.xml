@@ -6,14 +6,42 @@
 
     <select id="selectBankBi" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
 
-        select
-          ep.test_paper_name,qb.* from
-			question_bank qb
-				LEFT JOIN test_paper_questions tpq
-					on qb.question_bank_id = tpq.test_questions_id
-						LEFT JOIN examination_paper  ep
-							on ep.test_paper_id = tpq.test_paper_id
+		select
+		qb.* from
+		question_bank qb
+		left join user u
+		on u.id = qb.user_id
+			<where>
+
+			  u.id = #{id}
+
+			<if test="datetimestrat!=null and datetimestrat!='' and datetimeend!=null and datetimeend!='' ">
+					and qb.question_bank_creation_time BETWEEN #{datetimestrat} AND #{datetimeend}
+			</if>
+
+			<if test="xialakuang1!=null and xialakuang1!='' and xialakuang1!='请选择' ">
+				and qb.question_bank_type = #{xialakuang1}
+			</if>
+
+			<if test="xialakuang2!=null and xialakuang2!='' and xialakuang2!='请选择' ">
+				and  qb.question_bank_classify = #{xialakuang2}
+			</if>
+			</where>
 
     </select>
+
+
+	<select id="selectQuestionBankType" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
+
+		SELECT 	distinct question_bank_type from question_bank
+
+	</select>
+
+	<select id="selectQuestionBankClassify" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
+
+		select distinct question_bank_classify from question_bank
+
+	</select>
+
 
 </mapper>
