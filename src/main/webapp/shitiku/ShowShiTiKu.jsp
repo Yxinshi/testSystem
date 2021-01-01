@@ -304,7 +304,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">试题分类</label>
                             <div class="col-sm-8">
-                                <select class="form-control"  readonly="readonly" id="questionBankClassifyId1">
+                                <select class="form-control" disabled id="questionBankClassifyId1">
                                 </select>
                             </div>
                         </div>
@@ -319,7 +319,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">题目类型</label>
                             <div class="col-sm-8">
-                                <select class="form-control" readonly="readonly" id="questionBankType1">
+                                <select class="form-control" disabled id="questionBankType1">
                                 </select>
                             </div>
                         </div>
