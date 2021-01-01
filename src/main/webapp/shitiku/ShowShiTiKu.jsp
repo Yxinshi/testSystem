@@ -15,10 +15,9 @@
 <script src="/static\bootstrap\table\tableExport.js"></script>
 
 
-<body>
+<body style="height: auto">
 
-<form class="form-horizontal" role="form">
-    <div style="width: 1300px; height: 780px; border:1px solid rgba(0,0,0,0.6); float: left; margin: 0px 0px 0px 50px; box-shadow: 0 0 8px black;">
+    <div style="width: 1300px; height: 800px; border:1px solid rgba(0,0,0,0.6); float: left; margin: 0px 0px 0px 50px; box-shadow: 0 0 8px black;">
         <h3 style="margin-bottom: 40px">试题库</h3>
 
         <div style="float: left">
@@ -50,7 +49,7 @@
         <div style="float: left ;margin-left: 40px; margin-top: 20px">
             <input type="button" value="模板导入" class="btn-primary btn" onclick="updata()">
             &nbsp;
-            <input type="button" value="新增试题" class="btn-primary btn" onclick="updata()">
+            <input type="button" value="新增试题" class="btn-primary btn" onclick="addShiti()">
             &nbsp;
             <input type="button" value="同步至共享库"  class="btn-primary btn " >
 
@@ -62,7 +61,109 @@
 
     </div>
 
-</form>
+
+<div id="addQuestionModal" class="bootbox modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">新增题目</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" >
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">题目内容</label>
+                        <div class="col-sm-8">
+                            <textarea  id="questionBankContent" class="form-control" rows="8"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">题目类型</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="questionBankType">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">A选项</label>
+                        <div class="col-sm-8">
+                            <input id="optionA" type="text" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">B选项</label>
+                        <div class="col-sm-8">
+                            <input id="optionB" type="text" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">C选项</label>
+                        <div class="col-sm-8">
+                            <input id="optionC" type="text" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">D选项</label>
+                        <div class="col-sm-8">
+                            <input id="optionD" type="text" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">题目答案</label>
+                        <div class="col-sm-8">
+                            <textarea  id="questionBankAnswer" class="form-control" rows="8"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">答案解析</label>
+                        <div class="col-sm-8">
+                            <textarea  id="analysis" class="form-control" rows="8"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">题目难度</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="difficulty">
+                                <option th:value="1">
+                                    一星难度
+                                </option>
+                                <option th:value="2">
+                                    二星难度
+                                </option>
+                                <option th:value="3">
+                                    三星难度
+                                </option>
+                                <option th:value="4">
+                                    四星难度
+                                </option>
+                                <option th:value="5">
+                                    五星难度
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">题目分值</label>
+                        <div class="col-sm-8">
+                            <input id="questionBankScore" type="text" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button data-bb-handler="confirm" type="button" id="confirmAddQuestionBtn" class="btn btn-success radius">
+                    <span><i class="icon-ok"></i></span> 确定
+                </button>
+                <button data-bb-handler="cancel" type="button" id="cancelAddQuestionBtn" class="btn btn-danger radius">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>
@@ -154,6 +255,7 @@
                     obj += "<option value=\""  + data.data[j].questionBankType + "\">" + data.data[j].questionBankType + "</option>";
                 }
                 $("#xiala").append("<option value='请选择'  >请选择...</option>"+ obj);
+                $("#questionBankTyp").append("<option value='请选择'  >请选择...</option>"+ obj);
 
             },
         })
@@ -178,6 +280,24 @@
             },
         })
     }
+
+
+//    addShiti新增试题
+    function addShiti() {
+        $("#addQuestionModal").modal('show')
+    }
+
+    $("#cancelAddQuestionBtn").click(function(){
+
+        $("#addQuestionModal").modal('hide')
+
+    });
+
+    $("#confirmAddQuestionBtn").click(function(){
+
+        console.log('123444')
+
+    });
 
 
 

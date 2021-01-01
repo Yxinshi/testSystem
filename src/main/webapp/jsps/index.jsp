@@ -64,8 +64,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div class="layui-tab" lay-filter="demo" lay-allowclose="true">
-            <ul class="layui-tab-title" id="thistab">
-            </ul>
+            <ul class="layui-tab-title" id="thistab"></ul>
             <div class="layui-tab-content">
                 <iframe src="" frameborder="0" id="iframeAdmin" style="width: 100%; height: 100%;"></iframe>
             </div>
