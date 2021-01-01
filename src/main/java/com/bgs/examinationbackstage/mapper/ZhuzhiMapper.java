@@ -44,4 +44,6 @@ public interface ZhuzhiMapper {
     void shortAnswerCountCountAdd(@Param("inLis") List<Integer> inLis, @Param("tid") Object tid, @Param("shortAnswerCount") Object shortAnswerCount);
 
     List<Map<String,Object>> ChooseQuestions();
+
+    boolean questionsAddS(@Param("inLis")List<Map<String,Object>> list,@Param("tid") Object tid);
 }
