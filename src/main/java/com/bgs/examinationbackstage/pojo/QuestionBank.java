@@ -23,6 +23,7 @@ public class QuestionBank  extends  Page{
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date questionBankCreationTime;
   private long userId;
+  private String name;
   private String optionA;
   private String optionB;
   private String optionC;

@@ -147,6 +147,22 @@
                     <el-row>&nbsp;</el-row>
                     <el-row>
                         <el-col :span="24">
+                            <template>
+                                <span class="demonstration">试题分类</span>&nbsp;
+                                <el-select v-model="tissue.classify" placeholder="请选择">
+                                    <el-option
+                                            v-for="item in designOptions"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </template>
+                        </el-col>
+                    </el-row>
+                    <el-row>&nbsp;</el-row>
+                    <el-row>
+                        <el-col :span="24">
                             <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="ChooseQuestions()">选择试题</el-button>
                         </el-col>
                     </el-row>
@@ -186,7 +202,7 @@
                                         </el-table-column>
                                         <el-table-column  label="分数">
                                             <template slot-scope="scope" >
-                                                <el-input v-model="scope.row.fenshu" placeholder="请输入内容"></el-input>
+                                                <el-input v-model="scope.row.fenshu" @blur="blurS" placeholder="请输入内容"></el-input>
                                             </template>
                                         </el-table-column>
                                         <el-table-column  label="操作">
@@ -208,10 +224,15 @@
                         <el-col :span="24">
                             <template>
                                 <div class="block">
-                                    <span class="demonstration">及格分数</span>&nbsp;
-                                    <el-input style="width: 260px" v-model="time" placeholder="请输入内容"></el-input>
+                                    <span class="demonstration" style="font-size: 16px">及格分数</span>
+                                    <el-input v-model="tissue.pass" style="width: 260px"
+                                              oninput="value=value.replace(/[^\d]/g,'')"
+                                    >
+                                        <template slot="append">满分{{tissue.fullMark}}</template>
+                                    </el-input>
                                 </div>
                             </template>
+
                         </el-col>
                     </el-row>
                     <el-row>&nbsp;</el-row>
@@ -220,7 +241,7 @@
                             <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="returnPaper()">返回</el-button>
                         </el-col>
                         <el-col :span="6">
-                            <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="fulfillStep()">下一步</el-button>
+                            <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="fulfillStep1()">完成提交</el-button>
                         </el-col>
                     </el-row>
                     <el-row>&nbsp;</el-row>
@@ -242,7 +263,7 @@
                         <el-col :span="24">
                             <template>
                                 <span class="demonstration">试题分类</span>&nbsp;
-                                <el-select v-model="tissue.classify" multiple placeholder="请选择">
+                                <el-select v-model="tissue.classify" placeholder="请选择">
                                     <el-option
                                             v-for="item in designOptions"
                                             :key="item.value"
@@ -381,7 +402,7 @@
                             <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="returnPaper()">返回</el-button>
                         </el-col>
                         <el-col :span="6">
-                            <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="fulfillStep()">下一步</el-button>
+                            <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="fulfillStep()">完成提交</el-button>
                         </el-col>
                     </el-row>
                     <el-row>&nbsp;</el-row>
@@ -602,12 +623,12 @@
                         })
                 }
             },
-
+            //跳转
             wancheng(){
                 location.href="${pageContext.request.contextPath}/jsps/SelectExam.jsp";
             },
+            /*抽选试题满分*/
             blur(){
-
                 if (isNaN(parseInt(this.tissue.singleGrade))){
                     this.tissue.singleGrade = 0
                 }
@@ -638,7 +659,6 @@
                 if (isNaN(parseInt(this.tissue.shortAnswerCount))){
                     this.tissue.shortAnswerCount = 0
                 }
-
                 var j = (parseInt(this.tissue.singleGrade)*parseInt(this.tissue.singleCount)) +
                     (parseInt(this.tissue.multipleGrade)*parseInt(this.tissue.multipleCount)) +
                     (parseInt(this.tissue.gapFillingGrade)*parseInt(this.tissue.gapFillingCount)) +
@@ -646,6 +666,28 @@
                     (parseInt(this.tissue.shortAnswerGrade)*parseInt(this.tissue.shortAnswerCount));
                 this.tissue.fullMark = j;
             },
+            /*固定试题满分*/
+            blurS(){
+                var s = this.settledTable;
+                var k = 0;
+                for (var i = 0; i <s.length ; i++) {
+                    if(s[i].fenshu!= null){
+                        if (isNaN(parseInt(s[i].fenshu))){
+                            s[i].fenshu = 0
+                        }
+                        k = (parseInt(k))+(parseInt(s[i].fenshu));
+                        if (s[i].fenshu == 0){
+                            s[i].fenshu = '';
+                        }
+                    }
+                }
+                if (isNaN(parseInt(k))){
+                    k = ''
+                }
+                this.tissue.fullMark = k;
+            },
+
+        /*返回上一层*/
             returnPaper(){
                 this.issue = 1;
                 this.jiben1='display:block';
@@ -653,20 +695,33 @@
                 this.jiben3='display:none';
                 this.jiben4='display:none';
             },
+            //抽选试题试卷表
             fulfillStep(){
                 this.issue = 3;
                 this.jiben1='display:none';
                 this.jiben2='display:none';
                 this.jiben3='display:none';
                 this.jiben4='display:block';
-
                 axios
-                    .post("/kaoshi/examination/",{tissue:this.tissue,userEx:this.multipleSelection})
+                    .post("/kaoshi/examination/",{tissue:this.tissue,userEx:this.multipleSelection,})
                     .then(function (res) {
 
                     })
-
             },
+            /*固定试题试卷*/
+            fulfillStep1(){
+                this.issue = 3;
+                this.jiben1='display:none';
+                this.jiben2='display:none';
+                this.jiben3='display:none';
+                this.jiben4='display:block';
+                axios
+                    .post("/kaoshi/FixedSubmitted/",{userEx:this.multipleSelection,settledTable:this.settledTable,tissue:this.tissue})
+                    .then(function (res) {
+
+                    })
+            },
+
             /*设计考试基本信息 下一步*/
             nextStep(){
                 this.dialogVisible1 = true;
@@ -752,6 +807,7 @@
             xvanzeDelete(item) {
                 console.log(item);
                 this.$refs.multipleT && this.$refs.multipleT.toggleRowSelection(item, false)
+                this.blurS();
     }
 
         }

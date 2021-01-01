@@ -58,7 +58,7 @@
         #{pass},
         #{fullMark},
         #{number},
-        0,0,0,1
+        0,0,0,#{user}
         );
     </insert>
 
@@ -139,4 +139,14 @@
         <select id="ChooseQuestions" resultType="map">
             select  * from question_bank
         </select>
+
+
+    <insert id="questionsAddS">
+        insert into test_paper_questions (test_paper_id, test_questions_id ,test_grade)
+        values
+        <foreach collection="inLis" item="item" index="index" separator=",">
+            (#{tid}, #{question_bank_id}, #{fenshu})
+        </foreach>
+    </insert>
+
 </mapper>

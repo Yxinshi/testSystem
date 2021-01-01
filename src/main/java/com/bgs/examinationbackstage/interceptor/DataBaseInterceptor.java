@@ -4,12 +4,13 @@ package com.bgs.examinationbackstage.interceptor;
 import com.bgs.examinationbackstage.service.UserService;
 import com.bgs.examinationbackstage.utils.BaseResponse;
 import com.bgs.examinationbackstage.utils.StatusCode;
-import com.sun.istack.internal.Nullable;
+
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;

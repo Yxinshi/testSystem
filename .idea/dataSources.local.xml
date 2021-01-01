@@ -2,9 +2,8 @@
 <project version="4">
   <component name="dataSourceStorageLocal">
     <data-source name="examination@8.131.85.12" uuid="288add2d-926d-4189-ae0c-a2280baf8a22">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
-      <secret-storage>forget</secret-storage>
-      <schema-mapping />
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <introspection-schemas>*:examination</introspection-schemas>
     </data-source>
   </component>
 </project>

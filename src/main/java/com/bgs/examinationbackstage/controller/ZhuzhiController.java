@@ -61,12 +61,12 @@ public class ZhuzhiController {
     }
 
     /**
-     * 创建试卷信息
+     * 创建试卷 抽选试题卷
      * */
     @RequestMapping("/examination")
-    public List<User>  examinationexamination(@RequestBody Map<String,Object> map) {
+    public List<User>  examinationexamination(@RequestBody Map<String,Object> map,HttpSession session) {
         System.out.println(map);
-        List<Map<String,Object>> list = zhuzhiService.examinationexamination(map);
+        List<Map<String,Object>> list = zhuzhiService.examinationexamination(map,session);
         System.out.println(list);
         return null;
     }
@@ -81,4 +81,21 @@ public class ZhuzhiController {
         System.out.println(list);
         return list;
     }
+
+    /**
+     * 创建试卷 固定试题卷
+     * */
+    @RequestMapping("/FixedSubmitted")
+    public List<Map<String,Object>>  FixedSubmitted(@RequestBody Map<String,Object> map,HttpSession session) {
+
+        System.out.println("controller==="+map);
+
+        List<Map<String,Object>> list = zhuzhiService.FixedSubmitted(map,session);
+        return null;
+    }
+
+
+
+
+
 }

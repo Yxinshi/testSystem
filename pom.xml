@@ -20,7 +20,7 @@
 
     <dependencies>
 
-    <!--  分页-->
+        <!--  分页-->
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-spring-boot-starter</artifactId>
@@ -31,9 +31,6 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.10</version>
         </dependency>
-
-
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -151,11 +148,11 @@
             <version>2.9.0</version>
         </dependency>
         <!-- mybatis-plus -->
-      <!--  <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.1.2</version>
-        </dependency>-->
+        <!--  <dependency>
+              <groupId>com.baomidou</groupId>
+              <artifactId>mybatis-plus-boot-starter</artifactId>
+              <version>3.1.2</version>
+          </dependency>-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
