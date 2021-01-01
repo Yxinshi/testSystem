@@ -16,6 +16,7 @@ import com.bgs.examinationbackstage.utils.StatusCode;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -62,6 +63,84 @@ public class BiController {
         List<QuestionBank> selectQuestionBankClassify = biService.selectQuestionBankClassify();
 
         return new BaseResponse(StatusCode.Success,selectQuestionBankClassify);
+    }
+
+
+    //新添加试题
+    @RequestMapping("Addquestion_bank")
+    @ResponseBody
+    public  BaseResponse  Addquestion_bank(HttpSession session,QuestionBank questionBank){
+        Integer id=null;
+       User u = (User) session.getAttribute("user");
+       if(u!=null){
+           id= u.getId();
+           System.out.println(id);
+       }
+
+        System.out.println(questionBank.toString());
+
+        int i = biService.Addquestion_bank(id,questionBank);
+
+        return new BaseResponse(StatusCode.Success,i);
+    }
+
+    //申请吧试题 设置为共享题
+    @RequestMapping("TopicUpTwo")
+    @ResponseBody
+    public  BaseResponse TopicUpTwo(String questionBankId){
+
+        System.out.println(questionBankId+"修改成功！");
+
+        int i = biService.TopicUpTwo(questionBankId);
+        if(i>0){
+            return new BaseResponse(StatusCode.Success);
+        }
+
+        return new BaseResponse(StatusCode.Fail);
+    }
+
+
+    //删除试题Deletequestion
+    @RequestMapping("Deletequestion")
+    @ResponseBody
+    public  BaseResponse Deletequestion(String questionBankId){
+
+        System.out.println(questionBankId+"删除成功！");
+
+        int i = biService.Deletequestion(questionBankId);
+        if(i>0){
+            return new BaseResponse(StatusCode.Success);
+        }
+
+        return new BaseResponse(StatusCode.Fail);
+    }
+
+
+    //查看单条 试题  具体信息lookOnequestion
+    @RequestMapping("lookOnequestion")
+    @ResponseBody
+    public  BaseResponse lookOnequestion(String questionBankId){
+
+        System.out.println(questionBankId+"查看成功！");
+
+        QuestionBank questionBank = biService.lookOnequestion(questionBankId);
+        if(questionBank!=null){
+            return new BaseResponse(StatusCode.Success,questionBank);
+        }
+        return new BaseResponse(StatusCode.Fail);
+    }
+
+    //修改试题UpOnequestionOK
+    @RequestMapping("UpOnequestionOK")
+    @ResponseBody
+    public  BaseResponse UpOnequestionOK(String questionBankId,QuestionBank questionBank){
+
+        int i  = biService.UpOnequestionOK(questionBankId,questionBank);
+        if(i>0){
+            return new BaseResponse(StatusCode.Success);
+        }
+
+        return new BaseResponse(StatusCode.Fail);
     }
 
 }

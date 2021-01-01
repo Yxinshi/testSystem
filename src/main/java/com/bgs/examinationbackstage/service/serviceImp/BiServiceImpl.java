@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BiServiceImpl implements BiService {
+public class BiServiceImpl implements BiService{
 
     @Autowired
     private BiMapper biMapper;
@@ -34,6 +34,31 @@ public class BiServiceImpl implements BiService {
     @Override
     public List<QuestionBank> selectQuestionBankClassify() {
         return biMapper.selectQuestionBankClassify();
+    }
+
+    @Override
+    public int Addquestion_bank(Integer id, QuestionBank questionBank) {
+        return biMapper.Addquestion_bank(id,questionBank);
+    }
+
+    @Override
+    public int TopicUpTwo(String questionBankId) {
+        return biMapper.TopicUpTwo(questionBankId);
+    }
+
+    @Override
+    public int Deletequestion(String questionBankId) {
+        return biMapper.Deletequestion(questionBankId);
+    }
+
+    @Override
+    public QuestionBank lookOnequestion(String questionBankId) {
+        return biMapper.lookOnequestion(questionBankId);
+    }
+
+    @Override
+    public int UpOnequestionOK(String questionBankId, QuestionBank questionBank) {
+        return biMapper.UpOnequestionOK(questionBankId,questionBank);
     }
 
 

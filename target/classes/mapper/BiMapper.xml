@@ -6,42 +6,93 @@
 
     <select id="selectBankBi" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
 
-		select
-		qb.* from
-		question_bank qb
-		left join user u
-		on u.id = qb.user_id
-			<where>
+        select
+        qb.* from
+        question_bank qb
+        left join user u
+        on u.id = qb.user_id
+        <where>
 
-			  u.id = #{id}
+            u.id = #{id}
 
-			<if test="datetimestrat!=null and datetimestrat!='' and datetimeend!=null and datetimeend!='' ">
-					and qb.question_bank_creation_time BETWEEN #{datetimestrat} AND #{datetimeend}
-			</if>
+            <if test="datetimestrat!=null and datetimestrat!='' and datetimeend!=null and datetimeend!='' ">
+                and qb.question_bank_creation_time BETWEEN #{datetimestrat} AND #{datetimeend}
+            </if>
 
-			<if test="xialakuang1!=null and xialakuang1!='' and xialakuang1!='请选择' ">
-				and qb.question_bank_type = #{xialakuang1}
-			</if>
+            <if test="xialakuang1!=null and xialakuang1!='' and xialakuang1!='请选择' ">
+                and qb.question_bank_type = #{xialakuang1}
+            </if>
 
-			<if test="xialakuang2!=null and xialakuang2!='' and xialakuang2!='请选择' ">
-				and  qb.question_bank_classify = #{xialakuang2}
-			</if>
-			</where>
+            <if test="xialakuang2!=null and xialakuang2!='' and xialakuang2!='请选择' ">
+                and qb.question_bank_classify = #{xialakuang2}
+            </if>
+        </where>
 
     </select>
 
 
-	<select id="selectQuestionBankType" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
+    <select id="selectQuestionBankType" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
 
 		SELECT 	distinct question_bank_type from question_bank
 
 	</select>
 
-	<select id="selectQuestionBankClassify" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
+    <select id="selectQuestionBankClassify" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
 
 		select distinct question_bank_classify from question_bank
 
 	</select>
 
+    <insert id="Addquestion_bank">
+
+		insert into question_bank
+		 (question_bank_content, question_bank_classify, question_bank_type, question_bank_answer,
+		  question_bank_score, question_bank_creation_time, user_id, optionA, optionB, optionC,
+		  optionD, analysis,difficulty )
+		   values
+		   (#{questionBank.questionBankContent},#{questionBank.questionBankClassify},#{questionBank.questionBankType},
+		   #{questionBank.questionBankAnswer} ,#{questionBank.questionBankScore},now(),#{id},#{questionBank.optionA},#{questionBank.optionB},
+		   #{questionBank.optionC},#{questionBank.optionD},#{questionBank.analysis},#{questionBank.difficulty} )
+
+	</insert>
+
+    <update id="TopicUpTwo">
+
+        update question_bank set shared_state = 1  where question_bank_id = #{questionBankId}
+
+    </update>
+
+
+    <delete id="Deletequestion">
+
+        delete from question_bank where question_bank_id = #{questionBankId}
+
+    </delete>
+
+    <select id="lookOnequestion" resultType="com.bgs.examinationbackstage.pojo.QuestionBank">
+         select qb.* from question_bank qb
+         where qb.question_bank_id = #{questionBankId}
+    </select>
+
+    <update id="UpOnequestionOK">
+
+        update question_bank
+                 set
+        question_bank_content = #{questionBank.questionBankContent},
+        question_bank_type = #{questionBank.questionBankType},
+        optionA = #{questionBank.optionA},
+        optionB = #{questionBank.optionB},
+        optionC = #{questionBank.optionC},
+        optionD = #{questionBank.optionD},
+        question_bank_answer = #{questionBank.questionBankAnswer},
+        analysis = #{questionBank.analysis},
+        difficulty = #{questionBank.difficulty},
+        question_bank_score = #{questionBank.questionBankScore},
+        question_bank_classify = #{questionBank.questionBankClassify},
+        question_bank_creation_time = now()
+
+        where question_bank_id = #{questionBankId}
+
+    </update>
 
 </mapper>

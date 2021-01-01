@@ -15,4 +15,14 @@ public interface BiService {
     List<QuestionBank> selectQuestionBankType();
 
     List<QuestionBank> selectQuestionBankClassify();
+
+    int Addquestion_bank(Integer id, QuestionBank questionBank);
+
+    int TopicUpTwo(String questionBankId);
+
+    int Deletequestion(String questionBankId);
+
+    QuestionBank lookOnequestion(String questionBankId);
+
+    int UpOnequestionOK(String questionBankId, QuestionBank questionBank);
 }
