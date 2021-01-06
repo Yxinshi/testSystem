@@ -79,7 +79,13 @@
                         </div>
                     </div>
 
-
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">题目类型</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="questionBankType">
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">题目内容</label>
@@ -88,13 +94,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">题目类型</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" id="questionBankType">
-                            </select>
-                        </div>
-                    </div>
+
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">A选项</label>
@@ -125,6 +125,8 @@
                         <label class="col-sm-2 control-label">题目答案</label>
                         <div class="col-sm-8">
                             <textarea  id="questionBankAnswer" placeholder="例如（A，B，C，D）" class="form-control" rows="8"></textarea>
+
+
                         </div>
                     </div>
                     <div class="form-group">
@@ -401,6 +403,29 @@
     </div>
 
 
+    <%--填空题是够确认弹出模态框--%>
+    <div class="modal fade" id="exampleModalTianKOng" tabindex="-1" role="dialog" aria-labelledby="TiankongexampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="TiankongexampleModalLabel">确认框</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="control-label">确认后不能修改哦？</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                    <button type="button" class="btn btn-primary" id="tiankongId">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
 <script>
@@ -411,7 +436,7 @@
         getll();
         shitileixing();
         shitifenlei();
-
+        //默认隐藏
     })
 
     //展示当前用户的添加的所有试题
@@ -736,6 +761,7 @@
     //    addShiti新增试题  提交模态框
     $("#confirmAddQuestionBtn").click(function(){
 
+
         console.log($("#questionBankContent").val())//题目内容
         console.log($("#questionBankType").val())//题目类型
         console.log($("#optionA").val())//A选项
@@ -791,6 +817,7 @@
                 console.log(data.msg)
                 if(data.msg=="成功"){
                     alert("添加成功")
+                    $('#shiti_table').bootstrapTable('refresh');
                     $("#addQuestionModal").modal('hide')
                 }else{
                     alert("请重新添加！！")
@@ -801,6 +828,49 @@
 
     });
 
+
+    //判断如果不是多选跟单选题  就禁用
+    $("#questionBankType").click(function () {
+        if($("#questionBankType").val()!='单选题'&&$("#questionBankType").val()!='多选题'){
+            $("#optionA").attr("disabled", true);
+            $("#optionB").attr("disabled", true);
+            $("#optionC").attr("disabled", true);
+            $("#optionD").attr("disabled", true);
+
+        }else {
+            $("#optionA").val("");
+            $("#optionB").val("");
+            $("#optionC").val("");
+            $("#optionD").val("");
+            $("#optionA").attr("disabled", false);
+            $("#optionB").attr("disabled", false);
+            $("#optionC").attr("disabled", false);
+            $("#optionD").attr("disabled", false);
+        }
+
+    })
+
+
+    $("#questionBankContent").blur(function () {
+        console.log(1);
+        if($("#questionBankType").val()=='填空题'){
+            $("#exampleModalTianKOng").modal("show");
+        }
+    })
+
+    $("#tiankongId").click(function () {
+        $("#questionBankContent").attr("disabled",true)
+        let aa =  $("#questionBankContent").val();
+        let a = $("#questionBankAnswer");
+        if(a.val()!=''){
+            $("#exampleModalTianKOng").modal("hide");
+        }else {
+            for (let i = 1; i < aa.split('（）').length  ; i++) {
+                a.val($("#questionBankAnswer").val()+i + ':\n');
+            }
+            $("#exampleModalTianKOng").modal("hide");
+        }
+    })
 
 
 
