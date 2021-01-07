@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aoyoubacks.mapper.aoyoOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.aoyoubacks.entity.AoyoOrder" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="commodity_id" property="commodityId" jdbcType="INTEGER" />
+    <result column="custom_id" property="customId" jdbcType="INTEGER" />
+    <result column="send_order_status" property="sendOrderStatus" jdbcType="INTEGER" />
+    <result column="pay_channel" property="payChannel" jdbcType="INTEGER" />
+    <result column="order_amount" property="orderAmount" jdbcType="DOUBLE" />
+    <result column="coupon_id" property="couponId" jdbcType="INTEGER" />
+    <result column="discount_amount" property="discountAmount" jdbcType="DOUBLE" />
+    <result column="freight_amount" property="freightAmount" jdbcType="DOUBLE" />
+    <result column="order_practical_amount" property="orderPracticalAmount" jdbcType="DOUBLE" />
+    <result column="order_input_time" property="orderInputTime" jdbcType="TIMESTAMP" />
+    <result column="order_settlement_time" property="orderSettlementTime" jdbcType="TIMESTAMP" />
+    <result column="order_delivery_time" property="orderDeliveryTime" jdbcType="TIMESTAMP" />
+    <result column="order_receiving_time" property="orderReceivingTime" jdbcType="TIMESTAMP" />
+    <result column="invoice_state" property="invoiceState" jdbcType="INTEGER" />
+    <result column="order_pay_number" property="orderPayNumber" jdbcType="VARCHAR" />
+    <result column="address_id" property="addressId" jdbcType="INTEGER" />
+    <result column="tracking_number" property="trackingNumber" jdbcType="VARCHAR" />
+    <result column="group_enjoy" property="groupEnjoy" jdbcType="INTEGER" />
+    <result column="group_order_receiving" property="groupOrderReceiving" jdbcType="INTEGER" />
+    <result column="record_date_id" property="recordDateId" jdbcType="INTEGER" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+
+  <select id="selectAll"  resultType="com.aoyoubacks.entity.OrderAndCustom">
+    SELECT
+      *
+    FROM
+      aoyo_order
+        LEFT JOIN aoyo_custom ON aoyo_order.custom_id = aoyo_custom.custom_id
+      <where>
+        <if test="orderId!=null and orderId!=''">
+          aoyo_order.order_code=#{orderId}
+        </if>
+        <if test="orderStatus!=null and orderStatus!=''">
+          and aoyo_order.send_order_status=#{orderStatus}
+        </if>
+      </where>
+  </select>
+
+
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, group_id, order_code, commodity_id, custom_id, send_order_status, pay_channel, 
+    order_amount, coupon_id, discount_amount, freight_amount, order_practical_amount, 
+    order_input_time, order_settlement_time, order_delivery_time, order_receiving_time, 
+    invoice_state, order_pay_number, address_id, tracking_number, group_enjoy, group_order_receiving, 
+    record_date_id, delete_flag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aoyoubacks.entity.aoyoOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from aoyo_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from aoyo_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from aoyo_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aoyoubacks.entity.aoyoOrderExample" >
+    delete from aoyo_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aoyoubacks.entity.AoyoOrder" >
+    insert into aoyo_order (order_id, group_id, order_code, 
+      commodity_id, custom_id, send_order_status, 
+      pay_channel, order_amount, coupon_id, 
+      discount_amount, freight_amount, order_practical_amount, 
+      order_input_time, order_settlement_time, 
+      order_delivery_time, order_receiving_time, 
+      invoice_state, order_pay_number, address_id, 
+      tracking_number, group_enjoy, group_order_receiving, 
+      record_date_id, delete_flag)
+    values (#{orderId,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, 
+      #{commodityId,jdbcType=INTEGER}, #{customId,jdbcType=INTEGER}, #{sendOrderStatus,jdbcType=INTEGER}, 
+      #{payChannel,jdbcType=INTEGER}, #{orderAmount,jdbcType=DOUBLE}, #{couponId,jdbcType=INTEGER}, 
+      #{discountAmount,jdbcType=DOUBLE}, #{freightAmount,jdbcType=DOUBLE}, #{orderPracticalAmount,jdbcType=DOUBLE}, 
+      #{orderInputTime,jdbcType=TIMESTAMP}, #{orderSettlementTime,jdbcType=TIMESTAMP}, 
+      #{orderDeliveryTime,jdbcType=TIMESTAMP}, #{orderReceivingTime,jdbcType=TIMESTAMP}, 
+      #{invoiceState,jdbcType=INTEGER}, #{orderPayNumber,jdbcType=VARCHAR}, #{addressId,jdbcType=INTEGER}, 
+      #{trackingNumber,jdbcType=VARCHAR}, #{groupEnjoy,jdbcType=INTEGER}, #{groupOrderReceiving,jdbcType=INTEGER}, 
+      #{recordDateId,jdbcType=INTEGER}, #{deleteFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aoyoubacks.entity.AoyoOrder" >
+    insert into aoyo_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="orderCode != null" >
+        order_code,
+      </if>
+      <if test="commodityId != null" >
+        commodity_id,
+      </if>
+      <if test="customId != null" >
+        custom_id,
+      </if>
+      <if test="sendOrderStatus != null" >
+        send_order_status,
+      </if>
+      <if test="payChannel != null" >
+        pay_channel,
+      </if>
+      <if test="orderAmount != null" >
+        order_amount,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="discountAmount != null" >
+        discount_amount,
+      </if>
+      <if test="freightAmount != null" >
+        freight_amount,
+      </if>
+      <if test="orderPracticalAmount != null" >
+        order_practical_amount,
+      </if>
+      <if test="orderInputTime != null" >
+        order_input_time,
+      </if>
+      <if test="orderSettlementTime != null" >
+        order_settlement_time,
+      </if>
+      <if test="orderDeliveryTime != null" >
+        order_delivery_time,
+      </if>
+      <if test="orderReceivingTime != null" >
+        order_receiving_time,
+      </if>
+      <if test="invoiceState != null" >
+        invoice_state,
+      </if>
+      <if test="orderPayNumber != null" >
+        order_pay_number,
+      </if>
+      <if test="addressId != null" >
+        address_id,
+      </if>
+      <if test="trackingNumber != null" >
+        tracking_number,
+      </if>
+      <if test="groupEnjoy != null" >
+        group_enjoy,
+      </if>
+      <if test="groupOrderReceiving != null" >
+        group_order_receiving,
+      </if>
+      <if test="recordDateId != null" >
+        record_date_id,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="orderCode != null" >
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityId != null" >
+        #{commodityId,jdbcType=INTEGER},
+      </if>
+      <if test="customId != null" >
+        #{customId,jdbcType=INTEGER},
+      </if>
+      <if test="sendOrderStatus != null" >
+        #{sendOrderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="payChannel != null" >
+        #{payChannel,jdbcType=INTEGER},
+      </if>
+      <if test="orderAmount != null" >
+        #{orderAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=INTEGER},
+      </if>
+      <if test="discountAmount != null" >
+        #{discountAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="freightAmount != null" >
+        #{freightAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="orderPracticalAmount != null" >
+        #{orderPracticalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="orderInputTime != null" >
+        #{orderInputTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderSettlementTime != null" >
+        #{orderSettlementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderDeliveryTime != null" >
+        #{orderDeliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderReceivingTime != null" >
+        #{orderReceivingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceState != null" >
+        #{invoiceState,jdbcType=INTEGER},
+      </if>
+      <if test="orderPayNumber != null" >
+        #{orderPayNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="addressId != null" >
+        #{addressId,jdbcType=INTEGER},
+      </if>
+      <if test="trackingNumber != null" >
+        #{trackingNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="groupEnjoy != null" >
+        #{groupEnjoy,jdbcType=INTEGER},
+      </if>
+      <if test="groupOrderReceiving != null" >
+        #{groupOrderReceiving,jdbcType=INTEGER},
+      </if>
+      <if test="recordDateId != null" >
+        #{recordDateId,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aoyoubacks.entity.aoyoOrderExample" resultType="java.lang.Integer" >
+    select count(*) from aoyo_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update aoyo_order
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null" >
+        group_id = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderCode != null" >
+        order_code = #{record.orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commodityId != null" >
+        commodity_id = #{record.commodityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.customId != null" >
+        custom_id = #{record.customId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendOrderStatus != null" >
+        send_order_status = #{record.sendOrderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.payChannel != null" >
+        pay_channel = #{record.payChannel,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderAmount != null" >
+        order_amount = #{record.orderAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.couponId != null" >
+        coupon_id = #{record.couponId,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountAmount != null" >
+        discount_amount = #{record.discountAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.freightAmount != null" >
+        freight_amount = #{record.freightAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.orderPracticalAmount != null" >
+        order_practical_amount = #{record.orderPracticalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.orderInputTime != null" >
+        order_input_time = #{record.orderInputTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderSettlementTime != null" >
+        order_settlement_time = #{record.orderSettlementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderDeliveryTime != null" >
+        order_delivery_time = #{record.orderDeliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderReceivingTime != null" >
+        order_receiving_time = #{record.orderReceivingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.invoiceState != null" >
+        invoice_state = #{record.invoiceState,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderPayNumber != null" >
+        order_pay_number = #{record.orderPayNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressId != null" >
+        address_id = #{record.addressId,jdbcType=INTEGER},
+      </if>
+      <if test="record.trackingNumber != null" >
+        tracking_number = #{record.trackingNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupEnjoy != null" >
+        group_enjoy = #{record.groupEnjoy,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupOrderReceiving != null" >
+        group_order_receiving = #{record.groupOrderReceiving,jdbcType=INTEGER},
+      </if>
+      <if test="record.recordDateId != null" >
+        record_date_id = #{record.recordDateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update aoyo_order
+    set order_id = #{record.orderId,jdbcType=INTEGER},
+      group_id = #{record.groupId,jdbcType=INTEGER},
+      order_code = #{record.orderCode,jdbcType=VARCHAR},
+      commodity_id = #{record.commodityId,jdbcType=INTEGER},
+      custom_id = #{record.customId,jdbcType=INTEGER},
+      send_order_status = #{record.sendOrderStatus,jdbcType=INTEGER},
+      pay_channel = #{record.payChannel,jdbcType=INTEGER},
+      order_amount = #{record.orderAmount,jdbcType=DOUBLE},
+      coupon_id = #{record.couponId,jdbcType=INTEGER},
+      discount_amount = #{record.discountAmount,jdbcType=DOUBLE},
+      freight_amount = #{record.freightAmount,jdbcType=DOUBLE},
+      order_practical_amount = #{record.orderPracticalAmount,jdbcType=DOUBLE},
+      order_input_time = #{record.orderInputTime,jdbcType=TIMESTAMP},
+      order_settlement_time = #{record.orderSettlementTime,jdbcType=TIMESTAMP},
+      order_delivery_time = #{record.orderDeliveryTime,jdbcType=TIMESTAMP},
+      order_receiving_time = #{record.orderReceivingTime,jdbcType=TIMESTAMP},
+      invoice_state = #{record.invoiceState,jdbcType=INTEGER},
+      order_pay_number = #{record.orderPayNumber,jdbcType=VARCHAR},
+      address_id = #{record.addressId,jdbcType=INTEGER},
+      tracking_number = #{record.trackingNumber,jdbcType=VARCHAR},
+      group_enjoy = #{record.groupEnjoy,jdbcType=INTEGER},
+      group_order_receiving = #{record.groupOrderReceiving,jdbcType=INTEGER},
+      record_date_id = #{record.recordDateId,jdbcType=INTEGER},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aoyoubacks.entity.AoyoOrder" >
+    update aoyo_order
+    <set >
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="orderCode != null" >
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityId != null" >
+        commodity_id = #{commodityId,jdbcType=INTEGER},
+      </if>
+      <if test="customId != null" >
+        custom_id = #{customId,jdbcType=INTEGER},
+      </if>
+      <if test="sendOrderStatus != null" >
+        send_order_status = #{sendOrderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="payChannel != null" >
+        pay_channel = #{payChannel,jdbcType=INTEGER},
+      </if>
+      <if test="orderAmount != null" >
+        order_amount = #{orderAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=INTEGER},
+      </if>
+      <if test="discountAmount != null" >
+        discount_amount = #{discountAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="freightAmount != null" >
+        freight_amount = #{freightAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="orderPracticalAmount != null" >
+        order_practical_amount = #{orderPracticalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="orderInputTime != null" >
+        order_input_time = #{orderInputTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderSettlementTime != null" >
+        order_settlement_time = #{orderSettlementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderDeliveryTime != null" >
+        order_delivery_time = #{orderDeliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderReceivingTime != null" >
+        order_receiving_time = #{orderReceivingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceState != null" >
+        invoice_state = #{invoiceState,jdbcType=INTEGER},
+      </if>
+      <if test="orderPayNumber != null" >
+        order_pay_number = #{orderPayNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="addressId != null" >
+        address_id = #{addressId,jdbcType=INTEGER},
+      </if>
+      <if test="trackingNumber != null" >
+        tracking_number = #{trackingNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="groupEnjoy != null" >
+        group_enjoy = #{groupEnjoy,jdbcType=INTEGER},
+      </if>
+      <if test="groupOrderReceiving != null" >
+        group_order_receiving = #{groupOrderReceiving,jdbcType=INTEGER},
+      </if>
+      <if test="recordDateId != null" >
+        record_date_id = #{recordDateId,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aoyoubacks.entity.AoyoOrder" >
+    update aoyo_order
+    set group_id = #{groupId,jdbcType=INTEGER},
+      order_code = #{orderCode,jdbcType=VARCHAR},
+      commodity_id = #{commodityId,jdbcType=INTEGER},
+      custom_id = #{customId,jdbcType=INTEGER},
+      send_order_status = #{sendOrderStatus,jdbcType=INTEGER},
+      pay_channel = #{payChannel,jdbcType=INTEGER},
+      order_amount = #{orderAmount,jdbcType=DOUBLE},
+      coupon_id = #{couponId,jdbcType=INTEGER},
+      discount_amount = #{discountAmount,jdbcType=DOUBLE},
+      freight_amount = #{freightAmount,jdbcType=DOUBLE},
+      order_practical_amount = #{orderPracticalAmount,jdbcType=DOUBLE},
+      order_input_time = #{orderInputTime,jdbcType=TIMESTAMP},
+      order_settlement_time = #{orderSettlementTime,jdbcType=TIMESTAMP},
+      order_delivery_time = #{orderDeliveryTime,jdbcType=TIMESTAMP},
+      order_receiving_time = #{orderReceivingTime,jdbcType=TIMESTAMP},
+      invoice_state = #{invoiceState,jdbcType=INTEGER},
+      order_pay_number = #{orderPayNumber,jdbcType=VARCHAR},
+      address_id = #{addressId,jdbcType=INTEGER},
+      tracking_number = #{trackingNumber,jdbcType=VARCHAR},
+      group_enjoy = #{groupEnjoy,jdbcType=INTEGER},
+      group_order_receiving = #{groupOrderReceiving,jdbcType=INTEGER},
+      record_date_id = #{recordDateId,jdbcType=INTEGER},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>

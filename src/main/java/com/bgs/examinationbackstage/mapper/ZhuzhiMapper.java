@@ -46,4 +46,14 @@ public interface ZhuzhiMapper {
     List<Map<String,Object>> ChooseQuestions();
 
     boolean questionsAddS(@Param("inLis")List<Map<String,Object>> list,@Param("tid") Object tid);
+
+    Map<String,Object> essentialInformation(Object id);
+
+    List<Map<String,Object>> essentialUser(Object id);
+
+    List<Map<String,Object>> essentialExam(Object id);
+
+    List<Map<String,Object>> analyseExam();
+
+    List<Map<String,Object>> selectPaper(Object id);
 }

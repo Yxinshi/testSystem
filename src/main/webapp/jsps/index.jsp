@@ -14,10 +14,10 @@
     <%-- 设置移动设备优先--%>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script src="/static/js/jquery-3.4.1.min.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/layuiadmin/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/layuiadmin/style/admin.css" media="all">
+    <script src="/static/layuiadmin/layui/layui.js" type="text/javascript"></script>
 
-    <script src="/static/layui/layui.js" type="text/javascript"></script>
-    <script src="/static/layui/lay/modules/table.js" type="text/javascript"></script>
 
 </head>
 <body class="layui-layout-body">
@@ -33,7 +33,6 @@
             <a href="javascript:;">其它系统</a>
             <dl class="layui-nav-child">
                 <dd><a href="">邮件管理</a></dd>
-                <dd><a href="">消息管理</a></dd>
                 <dd><a href="">授权管理</a></dd>
             </dl>
         </li>
@@ -56,7 +55,19 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" id="ztreeshow"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree"   lay-filter="test">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">消息</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="xiaoxi.jsp">消息列表</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">数据统计222</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="kaoshiscore.jsp">考试成绩</a></dd>
+                    </dl>
+                </li>
             </ul>
         </div>
     </div>
