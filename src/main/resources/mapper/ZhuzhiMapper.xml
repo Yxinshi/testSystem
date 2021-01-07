@@ -37,7 +37,7 @@
     </delete>
 
 
-    <select id="addUser" resultType="User">
+    <select id="addUser" resultType="com.bgs.examinationbackstage.pojo.User">
         select * from user
     </select>
 
@@ -136,8 +136,9 @@
         </foreach>
     </insert>
 
-        <select id="ChooseQuestions" resultType="map">
+        <!--<select id="ChooseQuestions" resultType="map">
             select  * from question_bank
+<<<<<<< 3e24a113af69e2f55475d03813cdd7b69c5b75ba
         </select>
 
 
@@ -149,4 +150,7 @@
         </foreach>
     </insert>
 
+=======
+        </select>-->
+>>>>>>> hfhfb
 </mapper>

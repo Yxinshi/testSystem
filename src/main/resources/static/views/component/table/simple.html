@@ -1,0 +1,167 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>商品分类 - 数据表格</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>组件</cite></a>
+    <a><cite>数据表格</cite></a>
+    <a><cite>数据表格的重载</cite></a>
+  </div>
+</div>
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">商品分类</div>
+        <div class="test-table-reload-btn layui-form" style="margin-bottom: 10px;">
+          <div class="layui-row">
+            <div class="layui-col-md3 layui-col-md-offset2">
+              类别名称：
+              <div class="layui-inline">
+                <input class="layui-input" name="id" id="test-table-id" autocomplete="off">
+              </div>
+            </div>
+            <div class=" layui-col-md4">
+              <button class="layui-btn" data-type="reload">搜索</button>
+            </div>
+          </div>
+        </div>
+        <table class="layui-hide" id="test-table-reload" lay-filter="user"></table>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="../../../layuiadmin/layui/layui.js"></script>
+
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
+
+  </div>
+</script>
+
+<script type="text/html" id="gongju">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+    layui.config({
+        base: '../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'table','form'], function(){
+        var table = layui.table,
+            admin = layui.admin,
+            form = layui.form;
+
+        //方法级渲染
+        table.render({
+            elem: '#test-table-reload'
+            ,url: '/getAllCommodityClassLimit'
+            ,width: admin.screen() > 1 ? 1000 : ''
+            ,toolbar:'#toolbarDemo'
+            ,cols: [[
+                {checkbox: true, fixed: true}
+                ,{field:'classId', title: '类别id', width:120, sort: true, fixed: true}
+                ,{field:'className', title: '类别名称', width:220}
+                ,{field:'parentClassId', title: '父类别', width:120}
+                ,{field:'classDesc', title: '父类别描述',width:200}
+                ,{field:'statusId', title: '类别状态', sort: true, width:140}
+                ,{field:'classify', title: '操作',toolbar: '#gongju',align:'center'}
+            ]]
+            ,page: true
+
+        });
+
+
+        //监听事件
+        table.on('toolbar(user)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'add':
+                    layer.open({
+                        type: 2,
+                        content: 'uploadImages/addClassify.html', //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                        area: ['1000px', '700px']
+                    });
+                    break;
+                case 'delete':
+                    layer.msg('删除');
+                    break;
+                case 'update':
+                    layer.msg('编辑');
+                    break;
+            }
+        });
+        //监听工具条
+        table.on('tool(user)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+            if(layEvent === 'detail'){ //查看
+
+
+                //do somehing
+            } else if(layEvent === 'del'){ //删除
+                layer.confirm('真的删除行么', function(index){
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
+                    //向服务端发送删除指令
+                });
+            } else if(layEvent === 'edit'){ //编辑
+                //do something
+
+                //同步更新缓存对应的值
+                obj.update({
+                    username: '123'
+                    ,title: 'xxx'
+                });
+            } else if(layEvent === 'LAYTABLE_TIPS'){
+                layer.alert('Hi，头部工具栏扩展的右侧图标。');
+            }
+        });
+
+
+        // var $ = layui.$, active = {
+        //     reload: function(){
+        //         var orderid = $('#test-table-id');
+        //
+        //         alert(orderstutas);
+        //         //执行重载
+        //         table.reload('test-table-reload', {
+        //             page: {
+        //                 curr: 1 //重新从第 1 页开始
+        //             }
+        //             ,url: '/getAllOrder?orderId='+orderid.val() +"&orderstutas="+orderstutas
+        //         });
+        //     }
+        // };
+
+        $('.test-table-reload-btn .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+</script>
+</body>
+</html>

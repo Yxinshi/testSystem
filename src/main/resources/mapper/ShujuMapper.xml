@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bgs.examinationbackstage.mapper.ShujuMapper">
+	<resultMap id="BaseResultMap" type="com.bgs.examinationbackstage.pojo.ExaminationPaper" >
+		<id column="test_paper_id" property="testPaperId"/>
+		<result column="test_paper_name" property="testPaperName"  />
+		<result column="test_paper_date" property="testPaperDate"  />
+		<result column="test_paper_start_time" property="testPaperStartTime"  />
+		<result column="test_paper_end_time" property="testPaperEndTime" />
+		<result column="test_paper_state" property="testPaperState"  />
+		<result column="test_paper_time" property="testPaperTime" />
+		<result column="item_bank_classify" property="itemBankClassify"  />
+		<result column="Way_to_draw" property="wayToDraw"  />
+		<result column="test_paper_pass_mark" property="testPaperPassMark"  />
+		<result column="test_paper_full_mark" property="testPaperFullMark"  />
+		<result column="test_paper_number_of_participants" property="testPaperNumberOfParticipants"  />
+		<result column="test_paper_by_the_number_of" property="testPaperByTheNumberOf"  />
+		<result column="test_paper_passing_rate" property="testPaperPassingRate"  />
+		<result column="test_paper_average_score" property="testPaperAverageScore"  />
+		<result column="test_paper_founder" property="testPaperFounder" />
+		<result column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="job_number" property="jobNumber"/>
+		<result column="total_points" property="totalPoints" />
+		<result column="pass_state" property="passState" />
+	</resultMap>
+	<select id="findAll1" resultMap="BaseResultMap">
+		/*select e.test_paper_id,e.test_paper_name,e.test_paper_date,e.test_paper_start_time,
+		e.test_paper_end_time,e.test_paper_state,e.test_paper_time,e.item_bank_classify,
+		e.Way_to_draw,e.test_paper_pass_mark,e.test_paper_full_mark,e.test_paper_number_of_participants,e.test_paper_by_the_number_of,
+		e.test_paper_passing_rate,e.test_paper_average_score,e.test_paper_founder
+		FROM examination_paper e,user u where e.test_paper_founder=u.id and u.role_id=4*/
+		select u.id,u.name,u.job_number,u.account_number,e.test_paper_id,e.test_paper_name,e.test_paper_date,e.test_paper_start_time,
+		e.test_paper_end_time,e.test_paper_state,e.test_paper_time,e.item_bank_classify,
+		e.Way_to_draw,e.test_paper_pass_mark,e.test_paper_full_mark,e.test_paper_number_of_participants,e.test_paper_by_the_number_of,
+		e.test_paper_passing_rate,e.test_paper_average_score,e.test_paper_founder
+		FROM examination_paper e,test_paper_user t,`user` u
+		where e.test_paper_id=t.test_paper_id and
+		t.user_id=u.id
+		and u.role_id=4
+	</select>
+	<select id="findAll" resultMap="BaseResultMap">
+		select u.id,u.name,u.job_number,u.account_number,e.test_paper_id,e.test_paper_name,e.test_paper_date,e.test_paper_start_time,
+		e.test_paper_end_time,e.test_paper_state,e.test_paper_time,e.item_bank_classify,
+		e.Way_to_draw,e.test_paper_pass_mark,e.test_paper_full_mark,e.test_paper_number_of_participants,e.test_paper_by_the_number_of,
+		e.test_paper_passing_rate,e.test_paper_average_score,e.test_paper_founder
+		FROM examination_paper e,test_paper_user t,`user` u
+		<where>
+			e.test_paper_id=t.test_paper_id and
+			t.user_id=u.id
+			and u.role_id=4
+			<if test="testPaperName!='' and testPaperName!=null">
+				and e.test_paper_name like "%${testPaperName}%"
+			</if>
+			<if test="testPaperStartTime!='' and testPaperStartTime!=null">
+				and e.test_paper_start_time like "%${testPaperStartTime}%"
+			</if>
+			<if test="testPaperEndTime!='' and testPaperEndTime!=null">
+				and e.test_paper_end_time like "%${testPaperEndTime}%"
+			</if>
+		</where>
+		GROUP BY e.test_paper_id
+		limit #{pageNum},#{limit}
+	</select>
+	<select id="selectshujuCount" resultType="int">
+		select count(*)
+		FROM examination_paper e,test_paper_user t,`user` u
+		<where>
+			e.test_paper_id=t.test_paper_id and
+			t.user_id=u.id
+			and u.role_id=4
+			<if test="testPaperName!='' and testPaperName!=null">
+				and e.test_paper_name like "%${testPaperName}%"
+			</if>
+			<if test="testPaperStartTime!='' and testPaperStartTime!=null">
+				and e.test_paper_start_time like "%${testPaperStartTime}%"
+			</if>
+			<if test="testPaperEndTime!='' and testPaperEndTime!=null">
+				and e.test_paper_end_time like "%${testPaperEndTime}%"
+			</if>
+		</where>
+	</select>
+	<!--参加人数-->
+	<select id="selectCount" resultType="int" parameterType="int">
+  		select count(*) FROM test_paper_user t,user u where t.test_paper_id=#{testPaperId} and t.user_id=u.id and u.role_id=4
+	</select>
+	<select id="selectCount1" resultType="int" parameterType="int">
+		select count(*) FROM test_paper_user t,user u where t.test_paper_id=#{testPaperId} and t.user_id=u.id and t.pass_state='1' and u.role_id=4
+	</select>
+	<select id="selectCount2" resultType="int" parameterType="int">
+		select sum(total_points)  FROM test_paper_user t,user u where t.test_paper_id=#{testPaperId} and t.user_id=u.id and u.role_id=4
+	</select>
+	<select id="findAllParameter" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select e.test_paper_id,e.test_paper_name,e.test_paper_date,e.test_paper_start_time,
+e.test_paper_end_time,e.test_paper_state,e.test_paper_time,e.item_bank_classify,
+e.Way_to_draw,e.test_paper_pass_mark,e.test_paper_full_mark,e.test_paper_number_of_participants,e.test_paper_by_the_number_of,
+e.test_paper_passing_rate,e.test_paper_average_score,e.test_paper_founder
+		FROM examination_paper e,test_paper_user t,`user` u
+		where e.test_paper_id=t.test_paper_id and
+		t.user_id=u.id
+		and u.id=#{uId}
+		and e.test_paper_id=#{testPaperId}
+	</select>
+	<select id="selectTestOk" resultType="int">
+		select count(answer) FROM examination_answer
+	WHERE answer in (SELECT question_bank_answer  from question_bank)  and examination_id=#{testPaperId}
+	</select>
+	<!-- 应参加人数 -->
+	<select id="selectCanjiaCount" resultType="int">
+		select COUNT(*) from user where role_id=4
+	</select>
+	<select id="zongti" resultType="int">
+		select COUNT(*)
+FROM examination_answer
+WHERE  examination_id=#{testPaperId}
+	</select>
+	<select id="zuigao" resultType="int">
+		select MAX(total_points) from test_paper_user where test_paper_id=#{testPaperId}
+	</select>
+	<select id="zuidi" resultType="int">
+		select MIN(total_points) from test_paper_user where test_paper_id=#{testPaperId}
+	</select>
+	<select id="quekao" resultType="com.bgs.examinationbackstage.pojo.User">
+		select name,job_number,account_number  from user
+		where id not in(select user_id from test_paper_user  where  test_paper_id=#{testPaperId}) and role_id=4
+	</select>
+	<select id="detail" resultMap="BaseResultMap">
+		select u.*,t.*,p.test_paper_id,p.test_paper_full_mark,p.test_paper_pass_mark
+		from user u,examination_paper p,test_paper_user t
+		where u.id=t.user_id and p.test_paper_id=t.test_paper_id  and u.role_id=4 and p.test_paper_id=#{testPaperId}
+		order by t.total_points desc
+		limit #{pageNum},#{limit}
+	</select>
+	<select id="selectCounts" resultType="int">
+		select count(*) from user u,examination_paper p,test_paper_user t
+		where u.id=t.user_id and p.test_paper_id=t.test_paper_id  and u.role_id=4 and p.test_paper_id=#{testPaperId}
+		limit #{pageNum},#{limit}
+	</select>
+	<update id="insert" parameterType="java.lang.String">
+		update  examination_paper set test_paper_number_of_participants=#{valueOf},test_paper_by_the_number_of=#{valueOf1}, test_paper_passing_rate=#{lv} ,test_paper_average_score=#{valueOf2}
+		where test_paper_id=#{valueOf3}
+	</update>
+</mapper>
