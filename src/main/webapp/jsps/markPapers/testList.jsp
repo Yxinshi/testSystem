@@ -61,6 +61,7 @@
             ,url: '/mark/markPaperListShow' //数据接口
             ,method:'get'
             ,page: true
+            ,width:1350
             ,cols: [[ //表头
                 {field: 'testPaperId', title: '序号', width:100, fixed: 'center',sort:true}
                 ,{field: 'testPaperName', title: '试卷名称', width:150}

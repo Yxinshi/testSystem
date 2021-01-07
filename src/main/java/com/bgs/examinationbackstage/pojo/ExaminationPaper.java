@@ -23,6 +23,6 @@ public class ExaminationPaper {
   private String testPaperPassingRate;
   private String testPaperAverageScore;
 
-
+  private Integer userId;
 
 }
