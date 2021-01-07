@@ -1,0 +1,150 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>商品管理 - 数据表格</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>组件</cite></a>
+    <a><cite>数据表格</cite></a>
+    <a><cite>数据表格的重载</cite></a>
+  </div>
+</div>
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">商品规格</div>
+        <div class="test-table-reload-btn layui-form" style="margin-bottom: 10px;">
+          <div class="layui-row">
+            <div class="layui-col-md3 layui-col-md-offset2">
+              商品ID：
+              <div class="layui-inline">
+                <input class="layui-input" name="id" id="test-table-id" autocomplete="off">
+              </div>
+            </div>
+            <div class=" layui-col-md4">
+              <button class="layui-btn" data-type="reload">搜索</button>
+            </div>
+          </div>
+        </div>
+        <table class="layui-hide" id="test-table-reload" lay-filter="user"></table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src='https://libs.baidu.com/jquery/1.10.2/jquery.min.js'></script>
+<script src="../../../layuiadmin/layui/layui.js"></script>
+
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
+
+  </div>
+</script>
+
+<script type="text/html" id="gongju">
+  <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+    layui.config({
+        base: '../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'table','form','layer'], function(){
+        var table = layui.table,
+            admin = layui.admin,
+            form = layui.form,
+            $ = layui.jquery,
+            layer = layui.layer;
+        //方法级渲染
+        table.render({
+            elem: '#test-table-reload'
+            ,url: '/getAllCommoditySpecificationLimit'
+            ,width: admin.screen() > 1 ? 1400 : ''
+            ,toolbar:'#toolbarDemo'
+            ,cols: [[
+                {checkbox: true, fixed: true}
+                ,{field:'normsId', title: '序号', width:120, sort: true, fixed: true}
+                ,{field:'commodityName', title: '商品', width:220}
+                ,{field:'className', title: '类别', width:120, sort: true}
+                ,{field:'normsName', title: '规格名', width:120}
+                ,{field:'normsValue', title: '规格值',width:200}
+                ,{field:'classify', title: '操作',toolbar: '#gongju',align:'center'}
+            ]]
+            ,page: true
+
+        });
+
+        //监听事件
+        table.on('toolbar(user)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'add':
+                    layer.open({
+                        type: 2,
+                        content: 'uploadImages/addFriends.html', //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                        area: ['1400px', '700px']
+                    });
+                    break;
+                case 'delete':
+                    layer.msg('删除');
+                    break;
+                case 'update':
+                    layer.msg('编辑');
+                    break;
+            }
+        });
+
+        //监听工具条
+        table.on('tool(user)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+            if(layEvent === 'detail'){ //查看
+
+
+                //do somehing
+            } else if(layEvent === 'del'){ //删除
+                layer.confirm('真的删除行么', function(index){
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
+                    //向服务端发送删除指令
+                });
+            } else if(layEvent === 'edit'){ //编辑
+                //do something
+
+                //同步更新缓存对应的值
+                obj.update({
+                    username: '123'
+                    ,title: 'xxx'
+                });
+            } else if(layEvent === 'LAYTABLE_TIPS'){
+                layer.alert('Hi，头部工具栏扩展的右侧图标。');
+            }
+        });
+
+
+
+    });
+</script>
+</body>
+</html>

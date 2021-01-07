@@ -11,7 +11,7 @@ import java.util.Date;
 public class QuestionBank  extends  Page{
 
   private  String testPaperName;
-
+  private String name;
   private long questionBankId;
   private String questionBankContent;
   private String questionBankClassify;
