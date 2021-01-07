@@ -71,26 +71,26 @@
     </insert>
 
     <select id="singleCount" resultType="Integer">
-        select  question_bank_id  from  question_bank where question_bank_type = '单选题' order by rand() limit #{singleCount}
+        select  question_bank_id  from  question_bank where question_bank_type = '单选题'and shared_state = 2 order by rand() limit #{singleCount}
     </select>
 
 
     <select id="multipleCount" resultType="Integer">
-        select  question_bank_id  from  question_bank where question_bank_type = '多选题' order by rand() limit #{multipleCount}
+        select  question_bank_id  from  question_bank where question_bank_type = '多选题' and shared_state = 2   order by rand() limit #{multipleCount}
     </select>
 
 
     <select id="gapFillingCount" resultType="Integer">
-        select  question_bank_id  from  question_bank where question_bank_type = '填空题' order by rand() limit #{gapFillingCount}
+        select  question_bank_id  from  question_bank where question_bank_type = '填空题' and shared_state = 2  order by rand() limit #{gapFillingCount}
     </select>
 
 
     <select id="judgeCount" resultType="Integer">
-        select  question_bank_id  from  question_bank where question_bank_type = '判断题' order by rand() limit #{judgeCount}
+        select  question_bank_id  from  question_bank where question_bank_type = '判断题' and shared_state = 2  order by rand() limit #{judgeCount}
     </select>
 
     <select id="shortAnswerCount" resultType="Integer">
-        select  question_bank_id  from  question_bank where question_bank_type = '简答题' order by rand() limit #{shortAnswerCount}
+        select  question_bank_id  from  question_bank where question_bank_type = '简答题' and shared_state = 2  order by rand() limit #{shortAnswerCount}
     </select>
 
     <insert id="singleCountAdd">
@@ -137,7 +137,7 @@
     </insert>
 
         <select id="ChooseQuestions" resultType="map">
-            select  * from question_bank
+            select  * from question_bank where shared_state = 2
         </select>
 
 
@@ -145,8 +145,48 @@
         insert into test_paper_questions (test_paper_id, test_questions_id ,test_grade)
         values
         <foreach collection="inLis" item="item" index="index" separator=",">
-            (#{tid}, #{question_bank_id}, #{fenshu})
+            (#{tid}, #{item.question_bank_id}, #{item.fenshu})
         </foreach>
     </insert>
+
+
+    <select id="essentialInformation" resultType="map">
+           select * from examination_paper where test_paper_id = #{id}
+        </select>
+
+    <select id="essentialUser" resultType="map">
+            select * from  test_paper_user,user
+            where
+            test_paper_user.test_paper_id =  #{id} and
+            test_paper_user.user_id = user.id
+        </select>
+
+
+    <select id="essentialExam" resultType="map">
+        select * from test_paper_questions,question_bank
+        where test_paper_questions.test_paper_id = #{id} and
+        test_paper_questions.test_questions_id = question_bank.question_bank_id
+
+        </select>
+
+
+    <select id="analyseExam" resultType="map">
+         select  count(case when test_paper_user.join_state=1 then 1 else null end) aCount,
+                count(case when test_paper_user.total_points > test_paper_user.pass_mark then 1 else null end) bCount ,user.*
+                        from test_paper_user,user
+                    where test_paper_user.user_id = user.id GROUP BY user.id
+        </select>
+
+    <select id="selectPaper" resultType="map">
+        select
+        test_paper_user.*,examination_paper.test_paper_full_mark,examination_paper.test_paper_name
+        from
+        test_paper_user,
+        examination_paper
+        where
+        examination_paper.test_paper_id = test_paper_user.test_paper_id
+        and  test_paper_user.user_id = #{id}
+
+        </select>
 
 </mapper>

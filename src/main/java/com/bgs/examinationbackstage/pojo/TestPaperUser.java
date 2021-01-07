@@ -1,17 +1,28 @@
 package com.bgs.examinationbackstage.pojo;
 
 
+import java.sql.Timestamp;
+import java.util.List;
 
 public class TestPaperUser {
-
+  private Integer id;
   private long testPaperId;
-  private long userId;
-  private String totalPoints;
-  private String passState;
-  private String joinState;
+  private Integer userId;
+  private Integer totalPoints;
+  private Integer passMark;
+  private Integer estimateStatus;
+  private Integer passState;
+  private Integer joinState;
   private java.sql.Timestamp startTime;
   private java.sql.Timestamp endTime;
 
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
   public long getTestPaperId() {
     return testPaperId;
@@ -21,57 +32,67 @@ public class TestPaperUser {
     this.testPaperId = testPaperId;
   }
 
-
-  public long getUserId() {
+  public Integer getUserId() {
     return userId;
   }
 
-  public void setUserId(long userId) {
+  public void setUserId(Integer userId) {
     this.userId = userId;
   }
 
-
-  public String getTotalPoints() {
+  public Integer getTotalPoints() {
     return totalPoints;
   }
 
-  public void setTotalPoints(String totalPoints) {
+  public void setTotalPoints(Integer totalPoints) {
     this.totalPoints = totalPoints;
   }
 
+  public Integer getPassMark() {
+    return passMark;
+  }
 
-  public String getPassState() {
+  public void setPassMark(Integer passMark) {
+    this.passMark = passMark;
+  }
+
+  public Integer getEstimateStatus() {
+    return estimateStatus;
+  }
+
+  public void setEstimateStatus(Integer estimateStatus) {
+    this.estimateStatus = estimateStatus;
+  }
+
+  public Integer getPassState() {
     return passState;
   }
 
-  public void setPassState(String passState) {
+  public void setPassState(Integer passState) {
     this.passState = passState;
   }
 
-
-  public String getJoinState() {
+  public Integer getJoinState() {
     return joinState;
   }
 
-  public void setJoinState(String joinState) {
+  public void setJoinState(Integer joinState) {
     this.joinState = joinState;
   }
 
-
-  public java.sql.Timestamp getStartTime() {
+  public Timestamp getStartTime() {
     return startTime;
   }
 
-  public void setStartTime(java.sql.Timestamp startTime) {
+  public void setStartTime(Timestamp startTime) {
     this.startTime = startTime;
   }
 
-
-  public java.sql.Timestamp getEndTime() {
+  public Timestamp getEndTime() {
     return endTime;
   }
 
-  public void setEndTime(java.sql.Timestamp endTime) {
+  public void setEndTime(Timestamp endTime) {
     this.endTime = endTime;
   }
 

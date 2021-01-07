@@ -112,7 +112,7 @@
                     </el-row>
                     <el-row>
                         <el-col :span="6">
-                            <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="returnPaper()">返回</el-button>
+                            <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="wancheng()">返回</el-button>
                         </el-col>
                         <el-col :span="6">
                             <el-button size="medium" type="primary" icon="el-icon-user-solid" @click="nextStep()">下一步</el-button>
@@ -597,6 +597,7 @@
         },
         /*方法函数  事件等*/
         methods: {
+
             getRowKeys(row) {
                 return row.question_bank_id
             },
