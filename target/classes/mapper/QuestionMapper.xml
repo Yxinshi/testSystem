@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bgs.examinationbackstage.mapper.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.bgs.examinationbackstage.pojo.QuestionBank" >
+    <id column="question_bank_id" property="questionBankId" jdbcType="INTEGER" />
+    <result column="question_bank_content" property="questionBankContent" jdbcType="VARCHAR" />
+    <result column="question_bank_classify" property="questionBankClassify" jdbcType="VARCHAR" />
+    <result column="question_bank_type" property="questionBankType" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+    <result column="question_bank_answer" property="questionBankAnswer" jdbcType="VARCHAR" />
+    <result column="question_bank_score" property="questionBankScore" jdbcType="VARCHAR" />
+    <result column="question_bank_creation_time" property="questionBankCreationTime" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="optionA" property="optionA" jdbcType="VARCHAR" />
+    <result column="optionB" property="optionB" jdbcType="VARCHAR" />
+    <result column="optionC" property="optionC" jdbcType="VARCHAR" />
+    <result column="optionD" property="optionD" jdbcType="VARCHAR" />
+    <result column="shared_state" property="sharedState" jdbcType="VARCHAR" />
+    <result column="analysis" property="analysis" jdbcType="VARCHAR" />
+    <result column="difficulty" property="difficulty" jdbcType="VARCHAR" />
+  </resultMap>
+<select id="selectCount" resultType="java.lang.Integer">
+  SELECT COUNT(*) from question_bank q,`user` u
+  <where>
+    q.user_id=u.id
+    <if test="name!=null and name!=''">
+      and u.`name` like "%${name}%"
+    </if>
+    <if test="sharedState!=null and sharedState!=''">
+      and  q.shared_state like "%${sharedState}%"
+    </if>
+  </where>
+
+</select>
+  <select id="selectQuestionAll" resultMap="BaseResultMap">
+    SELECT q.question_bank_id,q.user_id,q.shared_state,u.`name`,q.question_bank_creation_time,q.question_bank_classify from question_bank q,`user` u
+
+     <where>
+       q.user_id=u.id
+       <if test="name!=null and name!=''">
+         and u.`name` like "%${name}%"
+       </if>
+       <if test="sharedState!=null and sharedState!=''">
+         and  q.shared_state like "%${sharedState}%"
+       </if>
+       limit #{pageNum},#{limit}
+     </where>
+
+  </select>
+
+  <select id="selectQuestionAllParamId" resultMap="BaseResultMap">
+    SELECT q.question_bank_id,q.question_bank_content,q.question_bank_classify,u.name,q.question_bank_creation_time from question_bank q,`user` u where q.user_id=u.id and question_bank_id=#{id}
+  </select>
+
+  <update id="updateStatus">
+    update question_bank set shared_state=#{status} WHERE question_bank_id=#{questionBankId}
+  </update>
+</mapper>
