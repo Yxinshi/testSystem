@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @MapperScan("com.bgs.examinationbackstage.mapper")
-@SpringBootApplication
 @EnableTransactionManagement(proxyTargetClass=true)
+@SpringBootApplication
 public class ExaminationbackstageApplication {
 
     public static void main(String[] args) {

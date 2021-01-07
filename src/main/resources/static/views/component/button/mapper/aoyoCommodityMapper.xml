@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aoyoubacks.mapper.aoyoCommodityMapper" >
+  <resultMap id="BaseResultMap" type="com.aoyoubacks.entity.AoyoCommodity" >
+    <id column="commodity_id" property="commodityId" jdbcType="INTEGER" />
+    <result column="commodity_number" property="commodityNumber" jdbcType="VARCHAR" />
+    <result column="commodity_name" property="commodityName" jdbcType="VARCHAR" />
+    <result column="brand_id" property="brandId" jdbcType="INTEGER" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="commdity_weight" property="commdityWeight" jdbcType="DOUBLE" />
+    <result column="commodity_selling_price" property="commoditySellingPrice" jdbcType="DOUBLE" />
+    <result column="commodity_cost_price" property="commodityCostPrice" jdbcType="DOUBLE" />
+    <result column="commodity_status" property="commodityStatus" jdbcType="INTEGER" />
+    <result column="commodity_come_out_time" property="commodityComeOutTime" jdbcType="TIMESTAMP" />
+    <result column="commodity_desc" property="commodityDesc" jdbcType="VARCHAR" />
+    <result column="commodity_entry" property="commodityEntry" jdbcType="TIMESTAMP" />
+    <result column="commodity_lastupdate_time" property="commodityLastupdateTime" jdbcType="TIMESTAMP" />
+    <result column="commodity_sort" property="commoditySort" jdbcType="INTEGER" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    commodity_id, commodity_number, commodity_name, brand_id, type_id, group_id, commdity_weight, 
+    commodity_selling_price, commodity_cost_price, commodity_status, commodity_come_out_time, 
+    commodity_desc, commodity_entry, commodity_lastupdate_time, commodity_sort, delete_flag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aoyoubacks.entity.aoyoCommodityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from aoyo_commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from aoyo_commodity
+    where commodity_id = #{commodityId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from aoyo_commodity
+    where commodity_id = #{commodityId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aoyoubacks.entity.aoyoCommodityExample" >
+    delete from aoyo_commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aoyoubacks.entity.AoyoCommodity" >
+    insert into aoyo_commodity (commodity_id, commodity_number, commodity_name, 
+      brand_id, type_id, group_id, 
+      commdity_weight, commodity_selling_price, commodity_cost_price, 
+      commodity_status, commodity_come_out_time, 
+      commodity_desc, commodity_entry, commodity_lastupdate_time, 
+      commodity_sort, delete_flag)
+    values (#{commodityId,jdbcType=INTEGER}, #{commodityNumber,jdbcType=VARCHAR}, #{commodityName,jdbcType=VARCHAR}, 
+      #{brandId,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, 
+      #{commdityWeight,jdbcType=DOUBLE}, #{commoditySellingPrice,jdbcType=DOUBLE}, #{commodityCostPrice,jdbcType=DOUBLE}, 
+      #{commodityStatus,jdbcType=INTEGER}, #{commodityComeOutTime,jdbcType=TIMESTAMP}, 
+      #{commodityDesc,jdbcType=VARCHAR}, #{commodityEntry,jdbcType=TIMESTAMP}, #{commodityLastupdateTime,jdbcType=TIMESTAMP}, 
+      #{commoditySort,jdbcType=INTEGER}, #{deleteFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aoyoubacks.entity.AoyoCommodity" >
+    insert into aoyo_commodity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commodityId != null" >
+        commodity_id,
+      </if>
+      <if test="commodityNumber != null" >
+        commodity_number,
+      </if>
+      <if test="commodityName != null" >
+        commodity_name,
+      </if>
+      <if test="brandId != null" >
+        brand_id,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="commdityWeight != null" >
+        commdity_weight,
+      </if>
+      <if test="commoditySellingPrice != null" >
+        commodity_selling_price,
+      </if>
+      <if test="commodityCostPrice != null" >
+        commodity_cost_price,
+      </if>
+      <if test="commodityStatus != null" >
+        commodity_status,
+      </if>
+      <if test="commodityComeOutTime != null" >
+        commodity_come_out_time,
+      </if>
+      <if test="commodityDesc != null" >
+        commodity_desc,
+      </if>
+      <if test="commodityEntry != null" >
+        commodity_entry,
+      </if>
+      <if test="commodityLastupdateTime != null" >
+        commodity_lastupdate_time,
+      </if>
+      <if test="commoditySort != null" >
+        commodity_sort,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commodityId != null" >
+        #{commodityId,jdbcType=INTEGER},
+      </if>
+      <if test="commodityNumber != null" >
+        #{commodityNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityName != null" >
+        #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="commdityWeight != null" >
+        #{commdityWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="commoditySellingPrice != null" >
+        #{commoditySellingPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="commodityCostPrice != null" >
+        #{commodityCostPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="commodityStatus != null" >
+        #{commodityStatus,jdbcType=INTEGER},
+      </if>
+      <if test="commodityComeOutTime != null" >
+        #{commodityComeOutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commodityDesc != null" >
+        #{commodityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityEntry != null" >
+        #{commodityEntry,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commodityLastupdateTime != null" >
+        #{commodityLastupdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commoditySort != null" >
+        #{commoditySort,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aoyoubacks.entity.aoyoCommodityExample" resultType="java.lang.Integer" >
+    select count(*) from aoyo_commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update aoyo_commodity
+    <set >
+      <if test="record.commodityId != null" >
+        commodity_id = #{record.commodityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.commodityNumber != null" >
+        commodity_number = #{record.commodityNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commodityName != null" >
+        commodity_name = #{record.commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandId != null" >
+        brand_id = #{record.brandId,jdbcType=INTEGER},
+      </if>
+      <if test="record.typeId != null" >
+        type_id = #{record.typeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null" >
+        group_id = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.commdityWeight != null" >
+        commdity_weight = #{record.commdityWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.commoditySellingPrice != null" >
+        commodity_selling_price = #{record.commoditySellingPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.commodityCostPrice != null" >
+        commodity_cost_price = #{record.commodityCostPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.commodityStatus != null" >
+        commodity_status = #{record.commodityStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.commodityComeOutTime != null" >
+        commodity_come_out_time = #{record.commodityComeOutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.commodityDesc != null" >
+        commodity_desc = #{record.commodityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commodityEntry != null" >
+        commodity_entry = #{record.commodityEntry,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.commodityLastupdateTime != null" >
+        commodity_lastupdate_time = #{record.commodityLastupdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.commoditySort != null" >
+        commodity_sort = #{record.commoditySort,jdbcType=INTEGER},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update aoyo_commodity
+    set commodity_id = #{record.commodityId,jdbcType=INTEGER},
+      commodity_number = #{record.commodityNumber,jdbcType=VARCHAR},
+      commodity_name = #{record.commodityName,jdbcType=VARCHAR},
+      brand_id = #{record.brandId,jdbcType=INTEGER},
+      type_id = #{record.typeId,jdbcType=INTEGER},
+      group_id = #{record.groupId,jdbcType=INTEGER},
+      commdity_weight = #{record.commdityWeight,jdbcType=DOUBLE},
+      commodity_selling_price = #{record.commoditySellingPrice,jdbcType=DOUBLE},
+      commodity_cost_price = #{record.commodityCostPrice,jdbcType=DOUBLE},
+      commodity_status = #{record.commodityStatus,jdbcType=INTEGER},
+      commodity_come_out_time = #{record.commodityComeOutTime,jdbcType=TIMESTAMP},
+      commodity_desc = #{record.commodityDesc,jdbcType=VARCHAR},
+      commodity_entry = #{record.commodityEntry,jdbcType=TIMESTAMP},
+      commodity_lastupdate_time = #{record.commodityLastupdateTime,jdbcType=TIMESTAMP},
+      commodity_sort = #{record.commoditySort,jdbcType=INTEGER},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aoyoubacks.entity.AoyoCommodity" >
+    update aoyo_commodity
+    <set >
+      <if test="commodityNumber != null" >
+        commodity_number = #{commodityNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityName != null" >
+        commodity_name = #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        brand_id = #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="commdityWeight != null" >
+        commdity_weight = #{commdityWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="commoditySellingPrice != null" >
+        commodity_selling_price = #{commoditySellingPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="commodityCostPrice != null" >
+        commodity_cost_price = #{commodityCostPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="commodityStatus != null" >
+        commodity_status = #{commodityStatus,jdbcType=INTEGER},
+      </if>
+      <if test="commodityComeOutTime != null" >
+        commodity_come_out_time = #{commodityComeOutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commodityDesc != null" >
+        commodity_desc = #{commodityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityEntry != null" >
+        commodity_entry = #{commodityEntry,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commodityLastupdateTime != null" >
+        commodity_lastupdate_time = #{commodityLastupdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commoditySort != null" >
+        commodity_sort = #{commoditySort,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where commodity_id = #{commodityId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aoyoubacks.entity.AoyoCommodity" >
+    update aoyo_commodity
+    set commodity_number = #{commodityNumber,jdbcType=VARCHAR},
+      commodity_name = #{commodityName,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=INTEGER},
+      type_id = #{typeId,jdbcType=INTEGER},
+      group_id = #{groupId,jdbcType=INTEGER},
+      commdity_weight = #{commdityWeight,jdbcType=DOUBLE},
+      commodity_selling_price = #{commoditySellingPrice,jdbcType=DOUBLE},
+      commodity_cost_price = #{commodityCostPrice,jdbcType=DOUBLE},
+      commodity_status = #{commodityStatus,jdbcType=INTEGER},
+      commodity_come_out_time = #{commodityComeOutTime,jdbcType=TIMESTAMP},
+      commodity_desc = #{commodityDesc,jdbcType=VARCHAR},
+      commodity_entry = #{commodityEntry,jdbcType=TIMESTAMP},
+      commodity_lastupdate_time = #{commodityLastupdateTime,jdbcType=TIMESTAMP},
+      commodity_sort = #{commoditySort,jdbcType=INTEGER},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER}
+    where commodity_id = #{commodityId,jdbcType=INTEGER}
+  </update>
+</mapper>

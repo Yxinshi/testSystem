@@ -1,0 +1,99 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>列宽自动分配 - 数据表格</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>组件</cite></a>
+        <a><cite>数据表格</cite></a>
+        <a><cite>列宽自动分配</cite></a>
+    </div>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">列宽自动分配</div>
+                <div class="layui-card-body">
+                    <table class="layui-hide" id="test-table-autowidth" lay-filter="cha"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'table'], function(){
+        var admin = layui.admin
+            ,table = layui.table,
+            layer = layui.layer;
+        table.render({
+            elem: '#test-table-autowidth'
+            ,url: '/Management/allAoyoAddress'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,layout: ['limit', 'count', 'prev', 'page', 'next', 'skip']
+            ,groups: 1 //只显示 1 个连续页码
+            ,first: false //不显示首页
+            ,last: false //不显示尾页
+            ,cols: [[
+                {field:'customId', title: 'ID', sort: true}
+                ,{field:'nickname', title: '用户名'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                ,{field:'addressStatus', title: '状态', sort: true}
+                ,{field:'defaultAddress', title: '是否为默认收货地址'}
+                ,{field:'iname', title: '省名称'}
+                ,{field:'tname', title: '市名称', align: 'center'} //单元格内容水平居中
+                ,{field:'ename', title: '区县名称', sort: true, align: 'right'} //单元格内容水平居中
+                ,{field:'xname', title: '街道名称', sort: true, align: 'right'}
+                ,{field:'creatTime', title: '创建时间', sort: true, align: 'right'}
+                ,{title: '操作',toolbar:'#chakan'}
+            ]]
+            ,page: true
+        });
+        admin.popup({
+            content: '演示数据均为静态模拟数据，因此【切换分页和条数时】发现数据未变并非 BUG。实际使用时改成真实接口即可。'
+            ,area: '300px'
+            ,offset: '15px'
+            ,shade: false
+        });
+        //监听工具条
+        table.on('tool(cha)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+            if(layEvent === 'detail'){ //查看
+                alert(data.customId)
+                var customId =data.customId;
+                layer.open({
+                    area: ['800px', '800px'],
+
+                    type: 2,
+                    content: './OneaoyoAddress.html?customId='+data.customId //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                });
+            }
+        });
+    });
+</script>
+<script type="text/html" id="chakan">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+</script>
+</body>
+</html>

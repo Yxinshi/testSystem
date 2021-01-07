@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aoyoubacks.mapper.aoyoCommoditySpecificationMapper" >
+
+    <select id="getAllCommoditySpecificationLimit" resultType="com.aoyoubacks.entity.aoyoCommoditySpecification">
+        SELECT
+            aoyo_commodity_norms.norms_id,
+            aoyo_commodity.commodity_name,
+            aoyo_commodity_class.class_name,
+            aoyo_commodity_norms.norms_name,
+            aoyo_commodity_norms.norms_value
+        FROM
+            aoyo_commodity_norms
+                LEFT JOIN aoyo_commodity ON aoyo_commodity_norms.commodity_id = aoyo_commodity.commodity_id
+                LEFT JOIN aoyo_commodity_class ON aoyo_commodity_norms.class_id = aoyo_commodity_class.class_id
+    </select>
+</mapper>

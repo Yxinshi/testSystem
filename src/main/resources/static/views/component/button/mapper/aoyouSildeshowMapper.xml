@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aoyoubacks.mapper.aoyouSildeshowMapper" >
+  <resultMap id="BaseResultMap" type="com.aoyoubacks.entity.AoyouSildeshow" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="platform_image_name" property="platformImageName" jdbcType="VARCHAR" />
+    <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+    <result column="serial_number" property="serialNumber" jdbcType="INTEGER" />
+    <result column="delete_flag11" property="deleteFlag11" jdbcType="INTEGER" />
+    <result column="status_id" property="statusId" jdbcType="INTEGER" />
+    <result column="platform_image_id" property="platformImageId" jdbcType="INTEGER" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="platform_image_desc" property="platformImageDesc" jdbcType="VARCHAR" />
+    <result column="platform_image_status" property="platformImageStatus" jdbcType="INTEGER" />
+    <result column="platform_image_uri" property="platformImageUri" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, platform_image_name, status_name, serial_number, delete_flag11, status_id, platform_image_id, 
+    creat_time, platform_image_desc, platform_image_status, platform_image_uri, delete_flag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aoyoubacks.entity.aoyouSildeshowExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from aoyou_sildeshow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from aoyou_sildeshow
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from aoyou_sildeshow
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aoyoubacks.entity.aoyouSildeshowExample" >
+    delete from aoyou_sildeshow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aoyoubacks.entity.AoyouSildeshow" >
+    insert into aoyou_sildeshow (id, platform_image_name, status_name, 
+      serial_number, delete_flag11, status_id, 
+      platform_image_id, creat_time, platform_image_desc, 
+      platform_image_status, platform_image_uri, 
+      delete_flag)
+    values (#{id,jdbcType=INTEGER}, #{platformImageName,jdbcType=VARCHAR}, #{statusName,jdbcType=VARCHAR}, 
+      #{serialNumber,jdbcType=INTEGER}, #{deleteFlag11,jdbcType=INTEGER}, #{statusId,jdbcType=INTEGER}, 
+      #{platformImageId,jdbcType=INTEGER}, #{creatTime,jdbcType=TIMESTAMP}, #{platformImageDesc,jdbcType=VARCHAR}, 
+      #{platformImageStatus,jdbcType=INTEGER}, #{platformImageUri,jdbcType=VARCHAR}, 
+      #{deleteFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aoyoubacks.entity.AoyouSildeshow" >
+    insert into aoyou_sildeshow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="platformImageName != null" >
+        platform_image_name,
+      </if>
+      <if test="statusName != null" >
+        status_name,
+      </if>
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="deleteFlag11 != null" >
+        delete_flag11,
+      </if>
+      <if test="statusId != null" >
+        status_id,
+      </if>
+      <if test="platformImageId != null" >
+        platform_image_id,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="platformImageDesc != null" >
+        platform_image_desc,
+      </if>
+      <if test="platformImageStatus != null" >
+        platform_image_status,
+      </if>
+      <if test="platformImageUri != null" >
+        platform_image_uri,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="platformImageName != null" >
+        #{platformImageName,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null" >
+        #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag11 != null" >
+        #{deleteFlag11,jdbcType=INTEGER},
+      </if>
+      <if test="statusId != null" >
+        #{statusId,jdbcType=INTEGER},
+      </if>
+      <if test="platformImageId != null" >
+        #{platformImageId,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="platformImageDesc != null" >
+        #{platformImageDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="platformImageStatus != null" >
+        #{platformImageStatus,jdbcType=INTEGER},
+      </if>
+      <if test="platformImageUri != null" >
+        #{platformImageUri,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aoyoubacks.entity.aoyouSildeshowExample" resultType="java.lang.Integer" >
+    select count(*) from aoyou_sildeshow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update aoyou_sildeshow
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.platformImageName != null" >
+        platform_image_name = #{record.platformImageName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusName != null" >
+        status_name = #{record.statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serialNumber != null" >
+        serial_number = #{record.serialNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.deleteFlag11 != null" >
+        delete_flag11 = #{record.deleteFlag11,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusId != null" >
+        status_id = #{record.statusId,jdbcType=INTEGER},
+      </if>
+      <if test="record.platformImageId != null" >
+        platform_image_id = #{record.platformImageId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creatTime != null" >
+        creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.platformImageDesc != null" >
+        platform_image_desc = #{record.platformImageDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.platformImageStatus != null" >
+        platform_image_status = #{record.platformImageStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.platformImageUri != null" >
+        platform_image_uri = #{record.platformImageUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update aoyou_sildeshow
+    set id = #{record.id,jdbcType=INTEGER},
+      platform_image_name = #{record.platformImageName,jdbcType=VARCHAR},
+      status_name = #{record.statusName,jdbcType=VARCHAR},
+      serial_number = #{record.serialNumber,jdbcType=INTEGER},
+      delete_flag11 = #{record.deleteFlag11,jdbcType=INTEGER},
+      status_id = #{record.statusId,jdbcType=INTEGER},
+      platform_image_id = #{record.platformImageId,jdbcType=INTEGER},
+      creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      platform_image_desc = #{record.platformImageDesc,jdbcType=VARCHAR},
+      platform_image_status = #{record.platformImageStatus,jdbcType=INTEGER},
+      platform_image_uri = #{record.platformImageUri,jdbcType=VARCHAR},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aoyoubacks.entity.AoyouSildeshow" >
+    update aoyou_sildeshow
+    <set >
+      <if test="platformImageName != null" >
+        platform_image_name = #{platformImageName,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null" >
+        status_name = #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNumber != null" >
+        serial_number = #{serialNumber,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag11 != null" >
+        delete_flag11 = #{deleteFlag11,jdbcType=INTEGER},
+      </if>
+      <if test="statusId != null" >
+        status_id = #{statusId,jdbcType=INTEGER},
+      </if>
+      <if test="platformImageId != null" >
+        platform_image_id = #{platformImageId,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="platformImageDesc != null" >
+        platform_image_desc = #{platformImageDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="platformImageStatus != null" >
+        platform_image_status = #{platformImageStatus,jdbcType=INTEGER},
+      </if>
+      <if test="platformImageUri != null" >
+        platform_image_uri = #{platformImageUri,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aoyoubacks.entity.AoyouSildeshow" >
+    update aoyou_sildeshow
+    set platform_image_name = #{platformImageName,jdbcType=VARCHAR},
+      status_name = #{statusName,jdbcType=VARCHAR},
+      serial_number = #{serialNumber,jdbcType=INTEGER},
+      delete_flag11 = #{deleteFlag11,jdbcType=INTEGER},
+      status_id = #{statusId,jdbcType=INTEGER},
+      platform_image_id = #{platformImageId,jdbcType=INTEGER},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      platform_image_desc = #{platformImageDesc,jdbcType=VARCHAR},
+      platform_image_status = #{platformImageStatus,jdbcType=INTEGER},
+      platform_image_uri = #{platformImageUri,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

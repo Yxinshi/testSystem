@@ -592,6 +592,7 @@
                     if(data.msg=="成功"){
                         alert("修改成功")
                         $("#UpOneQuestionModal").modal('hide')
+                        $('#shiti_table').bootstrapTable('refresh');
                     }else{
                         alert("请重新修改！！")
                     }
@@ -819,6 +820,7 @@
                     alert("添加成功")
                     $('#shiti_table').bootstrapTable('refresh');
                     $("#addQuestionModal").modal('hide')
+                    $('#shiti_table').bootstrapTable('refresh');
                 }else{
                     alert("请重新添加！！")
                 }
