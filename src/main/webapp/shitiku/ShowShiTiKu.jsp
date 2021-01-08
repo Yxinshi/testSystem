@@ -852,7 +852,7 @@
 
 
     $("#questionBankContent").blur(function () {
-        console.log(1);
+        console.log(asd);
         if($("#questionBankType").val()=='填空题'){
             $("#exampleModalTianKOng").modal("show");
         }
