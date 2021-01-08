@@ -7,6 +7,10 @@
 <!-- 引入样式 -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/static/element/index.css">
 <!-- 引入组件库 -->
+
+<!-- 引入组件库 -->
+<link href="${pageContext.request.contextPath}/static/css/style.css" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/static/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath }/static/element/index.js"></script>
 <script src="${pageContext.request.contextPath }/static/vue/axios.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/static/vue/qs.js"></script>
@@ -93,7 +97,7 @@
         <el-table-column  label="操作">
             <template slot-scope="scope" >
                 <span v-if="scope.row.test_paper_state == 1">
-                     <el-button  @click="detailsPaper()">
+                     <el-button  @click="selectPaper(scope.row)">
                     查看详情
                 </el-button>
                 <el-button @click="deletePaper(scope.row.test_paper_id)">
@@ -104,16 +108,13 @@
                 </el-button>
                 </span>
                 <span v-if="scope.row.test_paper_state == 2">
-                <el-button @click="detailsPaper()">
+                <el-button @click="selectPaper(scope.row)">
                     查看详情
                 </el-button>
                 </span>
                 <span v-if="scope.row.test_paper_state == 3">
-                   <el-button @click="detailsPaper()">
+                   <el-button @click="selectPaper(scope.row)">
                     查看详情
-                </el-button>
-                <el-button  @click="deletePaper(scope.row.test_paper_id)">
-                    删除
                 </el-button>
                 </span>
             </template>
@@ -171,6 +172,10 @@
         },
         /*方法函数  事件等*/
         methods: {
+            selectPaper(row){
+                console.log(row)
+                location.href="${pageContext.request.contextPath}/jsps/detailsExam.jsp?key="+row.test_paper_id;;
+            },
             xinzeng(){
                 location.href="${pageContext.request.contextPath}/jsps/addExam.jsp";
             },
@@ -191,6 +196,12 @@
                 axios
                     .post("/kaoshi/deletePaper/",{id:id})
                     .then(function (res) {
+                        if (res.data){
+                            alert("删除成功")
+                            location.reload();
+                        } else{
+                            alert("删除失败")
+                        }
                     })
             },
             // 初始页currentPage、初始每页数据数pagesize和数据data

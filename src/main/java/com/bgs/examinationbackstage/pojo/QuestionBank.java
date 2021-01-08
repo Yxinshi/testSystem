@@ -6,13 +6,14 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class QuestionBank  extends  Page{
 
   private  String testPaperName;
 
-  private long questionBankId;
+  private Integer questionBankId;
   private String questionBankContent;
   private String questionBankClassify;
   private String questionBankType;
@@ -22,7 +23,7 @@ public class QuestionBank  extends  Page{
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date questionBankCreationTime;
-  private long userId;
+  private Integer userId;
   private String name;
   private String optionA;
   private String optionB;
@@ -32,6 +33,9 @@ public class QuestionBank  extends  Page{
   private String analysis;
   private String difficulty;
 
+  private String answer;
+  private String score;
 
+  private List<QuestionBank> bankList;
 
 }

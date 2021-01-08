@@ -4,8 +4,11 @@ package com.bgs.examinationbackstage.interceptor;
 import com.bgs.examinationbackstage.service.UserService;
 import com.bgs.examinationbackstage.utils.BaseResponse;
 import com.bgs.examinationbackstage.utils.StatusCode;
+<<<<<<< 3e24a113af69e2f55475d03813cdd7b69c5b75ba
 
 
+=======
+>>>>>>> hfhfb
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

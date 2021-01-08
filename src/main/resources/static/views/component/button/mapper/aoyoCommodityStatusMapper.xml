@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aoyoubacks.mapper.aoyoCommodityStatusMapper" >
+  <resultMap id="BaseResultMap" type="com.aoyoubacks.entity.AoyoCommodityStatus" >
+    <id column="commodity_status_id" property="commodityStatusId" jdbcType="INTEGER" />
+    <result column="commodity_status_name" property="commodityStatusName" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    commodity_status_id, commodity_status_name, delete_flag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aoyoubacks.entity.aoyoCommodityStatusExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from aoyo_commodity_status
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from aoyo_commodity_status
+    where commodity_status_id = #{commodityStatusId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from aoyo_commodity_status
+    where commodity_status_id = #{commodityStatusId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aoyoubacks.entity.aoyoCommodityStatusExample" >
+    delete from aoyo_commodity_status
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aoyoubacks.entity.AoyoCommodityStatus" >
+    insert into aoyo_commodity_status (commodity_status_id, commodity_status_name, 
+      delete_flag)
+    values (#{commodityStatusId,jdbcType=INTEGER}, #{commodityStatusName,jdbcType=VARCHAR}, 
+      #{deleteFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aoyoubacks.entity.AoyoCommodityStatus" >
+    insert into aoyo_commodity_status
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commodityStatusId != null" >
+        commodity_status_id,
+      </if>
+      <if test="commodityStatusName != null" >
+        commodity_status_name,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commodityStatusId != null" >
+        #{commodityStatusId,jdbcType=INTEGER},
+      </if>
+      <if test="commodityStatusName != null" >
+        #{commodityStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aoyoubacks.entity.aoyoCommodityStatusExample" resultType="java.lang.Integer" >
+    select count(*) from aoyo_commodity_status
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update aoyo_commodity_status
+    <set >
+      <if test="record.commodityStatusId != null" >
+        commodity_status_id = #{record.commodityStatusId,jdbcType=INTEGER},
+      </if>
+      <if test="record.commodityStatusName != null" >
+        commodity_status_name = #{record.commodityStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update aoyo_commodity_status
+    set commodity_status_id = #{record.commodityStatusId,jdbcType=INTEGER},
+      commodity_status_name = #{record.commodityStatusName,jdbcType=VARCHAR},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aoyoubacks.entity.AoyoCommodityStatus" >
+    update aoyo_commodity_status
+    <set >
+      <if test="commodityStatusName != null" >
+        commodity_status_name = #{commodityStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where commodity_status_id = #{commodityStatusId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aoyoubacks.entity.AoyoCommodityStatus" >
+    update aoyo_commodity_status
+    set commodity_status_name = #{commodityStatusName,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER}
+    where commodity_status_id = #{commodityStatusId,jdbcType=INTEGER}
+  </update>
+</mapper>

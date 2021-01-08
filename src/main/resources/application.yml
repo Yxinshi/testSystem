@@ -51,8 +51,6 @@ mybatis:
       id-type: auto
   type-aliases-package: com.bgs.examinationbackstage.pojo
 #打印sql语句
-logging:
-  level:
-    com:
-      bgs:
-        examinationbackstage: debug
+#logging:
+  #level:
+    #com.bgs.examinationbackstage: debug

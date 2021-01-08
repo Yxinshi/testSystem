@@ -27,11 +27,52 @@
         FROM examination_paper p where p.test_paper_id=#{id}
     </select>
 
+    <select id="showTestUser" resultType="com.bgs.examinationbackstage.pojo.User">
+        SELECT u.`name`,u.job_number,tpu.total_points,tpu.estimate_status,tpu.id,p.test_paper_id,tpu.user_id,u.id
+        FROM examination_paper p,`user` u,test_paper_user tpu
+        WHERE p.test_paper_id=tpu.test_paper_id AND u.id = tpu.user_id AND p.test_paper_id=#{id}
+    </select>
 
 
 
+    <select id="selectEstimateStatus" resultType="com.bgs.examinationbackstage.pojo.TestPaperUser">
+        select estimate_status from test_paper_user where test_paper_id=#{id}
+    </select>
+
+    <resultMap id="map" type="com.bgs.examinationbackstage.pojo.QuestionBank" autoMapping="true">
+        <collection property="bankList" ofType="com.bgs.examinationbackstage.pojo.QuestionBank">
+            <id column="question_bank_id" property="questionBankId"></id>
+            <result column="question_bank_content" property="questionBankContent"></result>
+            <result column="question_bank_type" property="questionBankType"></result>
+            <result column="question_bank_answer" property="questionBankAnswer"></result>
+            <result column="question_bank_score" property="questionBankScore"></result>
+            <result column="optionA" property="optionA"></result>
+            <result column="optionB" property="optionB"></result>
+            <result column="optionC" property="optionC"></result>
+            <result column="optionD" property="optionD"></result>
+            <result column="answer" property="answer"></result>
+            <result column="score" property="score"></result>
+            <result column="test_paper_name" property="testPaperName"></result>
+        </collection>
+    </resultMap>
+    <select id="showTestPaperById" resultMap="map">
+        SELECT b.question_bank_id,b.question_bank_content,b.question_bank_type,b.question_bank_answer,
+        b.question_bank_score,
+        b.optionA,b.optionB,b.optionC,b.optionD,
+        a.answer,a.score,p.test_paper_name
+        FROM question_bank b,examination_answer a,`user` u,examination_paper p
+        WHERE a.question_id=b.question_bank_id AND a.user_id=u.id AND a.examination_id=p.test_paper_id
+        AND a.user_id=#{id}
+    </select>
 
 
+    <insert id="addScore" parameterType="com.bgs.examinationbackstage.pojo.ExaminationAnswer">
+        insert into examination_answer (score)
+        values
+        <foreach collection="list" item="answer" separator=",">
+            (#{answer.score})
+        </foreach>
+    </insert>
 
 
 

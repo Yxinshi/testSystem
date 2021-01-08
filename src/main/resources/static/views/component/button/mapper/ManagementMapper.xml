@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aoyoubacks.mapper.ManagementMapper">
+    <insert id="aoyoGroupFeaturedServices">
+        INSERT INTO
+        aoyo_group_featured_services
+        (featured_services_name,
+        featured_services_desc,
+        featured_services_remarks,
+        featured_services_isenable,
+        create_time,delete_flag)
+        VALUES
+        (#{featuredServicesName},
+        #{featuredServicesDesc},
+        #{featuredServicesRemarks},
+        #{featuredServicesIsenable},
+        CURRENT_DATE,
+        1)
+    </insert>
+    <select id="usermanagement" resultType="com.aoyoubacks.entity.SysUser">
+       SELECT u.group_id,u.user_id,g.group_name,g.GROUP_TYPE,u.user_name,u.user_alias,x.sex_name,u.USER_TEL,g.GROUP_CREATOR,o.ROLE_NAME
+       FROM sys_user u
+       LEFT JOIN sys_user_sex x
+       ON x.sex_id=u.user_sex
+       LEFT JOIN sys_group g
+       ON g.group_id=u.group_id
+       LEFT JOIN sys_role o
+       ON o.group_id=g.group_id
+    </select>
+
+    <resultMap id="xiangqing" type="com.aoyoubacks.entity.SysUser">
+        <id property="userId" column="user_id"></id>
+        <result column="GROUP_TYPE" property="groupType"></result>
+        <result column="user_name" property="userName"></result>
+        <result column="user_alias" property="userAlias"></result>
+        <result column="sex_name" property="sexName"></result>
+        <result column="group_name" property="groupName"></result>
+        <result column="USER_TEL" property="userTel"></result>
+        <result column="GROUP_CREATOR" property="groupCreator"></result>
+        <result column="ROLE_NAME" property="roleName"></result>
+        <result column="sname" property="sname"></result>
+        <result column="iname" property="iname"></result>
+        <result column="qname" property="qname"></result>
+        <result column="group_address_details" property="userAddressDetails"></result>
+    </resultMap>
+    <select id="allusermanagement" resultMap="xiangqing">
+        SELECT g.group_name,g.GROUP_TYPE,u.user_name,u.user_alias,x.sex_name,u.USER_TEL,g.GROUP_CREATOR,o.ROLE_NAME,i.name as sname,t.name as iname,e.name as qname,s.group_address_details FROM sys_user u
+        LEFT JOIN sys_user_sex x
+        ON x.sex_id=u.user_sex
+        LEFT JOIN sys_group g
+        ON g.group_id=u.group_id
+        LEFT JOIN sys_role o
+        ON o.group_id=g.group_id
+        LEFT JOIN sys_group_address s
+        ON g.ADDRESS_ID=s.group_address_id
+        LEFT JOIN aoyo_province i
+        ON i.code=s.group_province_id
+        LEFT JOIN aoyo_city t
+        ON t.code=s.group_city_id
+        LEFT JOIN aoyo_area e
+        ON e.code=s.group_county_id
+        WHERE u.group_id=#{id}
+    </select>
+    <select id="allAoyoAddress" resultType="com.aoyoubacks.entity.AoyoAddress">
+        SELECT c.custom_id,c.nickname,a.address_status,a.default_address,i.name as iname,t.name as tname,e.name as ename,a.creat_time FROM aoyo_address a
+        LEFT JOIN aoyo_province i
+        ON i.code=a.province_id
+        LEFT JOIN aoyo_city t
+        ON t.code=a.city_id
+        LEFT JOIN aoyo_area e
+        ON e.code=a.county_id
+        LEFT JOIN aoyo_custom c
+        ON c.custom_id=a.custom_id
+    </select>
+    <select id="oneAoyoAddress" resultType="com.aoyoubacks.entity.AoyoAddress">
+        SELECT c.nickname,a.address_status,a.default_address,i.name as iname,t.name as tname,e.name as ename,a.creat_time,l.label_name,a.telephone,a.consignee_name,a.address_details,x.name as xname FROM aoyo_address a
+        LEFT JOIN aoyo_province i
+        ON i.code=a.province_id
+        LEFT JOIN aoyo_city t
+        ON t.code=a.city_id
+        LEFT JOIN aoyo_area e
+        ON e.code=a.county_id
+        LEFT JOIN aoyo_custom c
+        ON c.custom_id=a.custom_id
+        LEFT JOIN aoyo_address_label l
+        ON l.label_id=a.address_label_id
+        LEFT JOIN aoyo_street x
+        ON x.code=a.street_id
+        WHERE a.address_id=#{id}
+    </select>
+    <select id="allAoyoGroupFeaturedServices" resultType="com.aoyoubacks.entity.AoyoGroupFeaturedServices">
+        SELECT featured_services_id,
+        featured_services_name,
+        featured_services_desc,
+        featured_services_remarks,
+        featured_services_isenable,
+        create_time
+        FROM
+        aoyo_group_featured_services
+    </select>
+    <select id="OneAoyoGroupFeaturedServices" resultType="com.aoyoubacks.entity.AoyoGroupFeaturedServices">
+        SELECT featured_services_id,
+        featured_services_name,
+        featured_services_desc,
+        featured_services_remarks,
+        featured_services_isenable,
+        create_time
+        FROM
+        aoyo_group_featured_services
+        where
+        featured_services_id=#{id}
+    </select>
+    <select id="allAoyoWorkOrder" resultType="com.aoyoubacks.entity.AoyoWorkOrder">
+        SELECT c.delete_flag,o.work_order_id,o.serial_code,r.order_code,c.nickname,c.name,c.mobile,o.offline_order,i.group_technician_name,c.create_time FROM aoyo_work_order o
+        LEFT JOIN aoyo_custom c
+        ON o.custom_id=c.custom_id
+        LEFT JOIN aoyo_order r
+        ON o.order_id=r.order_id
+        LEFT JOIN aoyo_group_technician i
+        ON i.group_technician_id=o.technician_id
+    </select>
+</mapper>

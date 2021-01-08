@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加商品</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<form class="layui-form layui-form-pane" action="" lay-filter="biaodan" id="searchForm" >
+    <div class="layui-row layui-col-space20" style="margin-top: 30px;">
+        <div class="layui-col-md3 layui-col-md-offset1">
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品名称*</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="commodityName" lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品编号*</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="commodityNumber" lay-verify="required" placeholder="请输入商品编号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-form-item">
+                <label class="layui-form-label">品牌*</label>
+                <div class="layui-input-inline">
+                    <select name="brandId" id="brandId" lay-filter="aihao">
+
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-row layui-col-space20">
+        <div class="layui-col-md3 layui-col-md-offset1">
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类*</label>
+                <div class="layui-input-inline">
+                    <select name="typeId" id="typeId" lay-filter="aihao">
+
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-form-item">
+                <label class="layui-form-label">出厂时间*</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" placeholder="请输入出厂时间" name="commodityComeOutTime" id="chuchangdate">
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态*</label>
+                <div class="layui-input-inline">
+                    <select name="commodityStatus" id="commodityStatus" lay-filter="aihao">
+
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-row layui-col-space20">
+        <div class="layui-col-md3 layui-col-md-offset1">
+            <div class="layui-form-item">
+                <label class="layui-form-label">录入时间*</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="commodityEntry"  placeholder="请输入录入时间" id="lurushijian">
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-form-item">
+                <label class="layui-form-label">重量(kg)*</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="commdityWeight" lay-verify="required" placeholder="请输入重量" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-form-item">
+                <label class="layui-form-label">销售价格(￥)*</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="commoditySellingPrice" lay-verify="required" placeholder="请输入销售价格" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row layui-col-space20">
+        <div class="layui-col-md3 layui-col-md-offset1">
+            <div class="layui-form-item">
+                <label class="layui-form-label">成本价(￥)*</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="commodityCostPrice" lay-verify="required" placeholder="请输入成本价" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-form-item">
+                <label class="layui-form-label">种类*</label>
+                <div class="layui-input-inline">
+                    <select name="variety"  lay-filter="aihao">
+                        <option value="">请选择种类</option>
+                        <option value="1">服务</option>
+                        <option value="2">商品</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+
+        </div>
+    </div>
+
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">上传多张图片</div>
+                <div class="layui-card-body">
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="test-upload-more">多图片上传</button>
+                        <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                            预览图：
+                            <div class="layui-upload-list" id="test-upload-more-list"></div>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <div class="layui-row layui-col-space20">
+        <div class="layui-col-md3 layui-col-md-offset1">
+
+
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+
+        </div>
+
+    </div>
+
+</form>
+<script src="../../../../layuiadmin/layui/layui.js"></script>
+<script src="js/jquery-2.1.3.min.js"></script>
+
+
+<script>
+    layui.use(['form','laydate','upload','layer'], function(){
+        var form = layui.form,
+       laydate=layui.laydate,
+        upload = layui.upload,
+        layer = layui.layer;
+        //日期时间选择器
+        laydate.render({
+            elem: '#chuchangdate'
+            ,type: 'datetime'
+            ,format:'yyyy-MM-dd'
+        });
+        laydate.render({
+            elem: '#lurushijian'
+            ,type: 'datetime'
+            ,format:'yyyy-MM-dd'
+        });
+
+        //初始化商品类型下拉框
+        $.get("/getAllCommodityClass", function(result) {
+            $("#typeId").append("<option value=''>请选择商品类型</option>");
+            $.each(result, function (index, item) {
+                // console.log(item.className);
+                $("#typeId").append("<option value='"+item.classId+"'>"+item.className+"</option>");
+                form.render('select');
+            });
+        });
+
+        //初始化商品品牌下拉框
+        $.get("/aoyoAllCommodityBrand", function(result) {
+            $("#brandId").append("<option value=''>请选择商品品牌</option>");
+            $.each(result, function (index, item) {
+                // console.log(item);
+                $("#brandId").append("<option value='"+item.commodityBrandId+"'>"+item.commodityBrandName+"</option>");
+                form.render('select');
+            });
+        });
+
+        //初始化商品状态下拉框
+        $.get("/aoyoAllCommodityStatus", function(result) {
+            $("#commodityStatus").append("<option value=''>请选择商品状态</option>");
+            $.each(result, function (index, item) {
+                // console.log(item);
+                $("#commodityStatus").append("<option value='"+item.commodityStatusId+"'>"+item.commodityStatusName+"</option>");
+                form.render('select');
+            });
+        });
+
+        form.on('submit(*)', function(data){
+            var data = $('#searchForm').serialize();
+
+
+            $.post("/addCommodity",data,function(result) {
+                alert("成功")
+            });
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            console.log(index);
+            parent.layer.close(index);  // 关闭layer
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+
+
+
+        //多图片上传
+        upload.render({
+            elem: '#test-upload-more'
+            ,url: '/datastorageImage'
+            ,multiple: true
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#test-upload-more-list').append('<img src="'+ result +'" alt="'+ file.name +'" style="width: 250px;height: 250px;" class="layui-upload-img">')
+                });
+            }
+            ,done: function(res){
+
+            }
+        });
+    });
+</script>
+</body>
+</html>

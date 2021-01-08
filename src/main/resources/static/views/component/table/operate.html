@@ -1,0 +1,118 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>轮播图 - 数据表格</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+  <div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+      <a lay-href="">主页</a>
+      <a><cite>组件</cite></a>
+      <a><cite>数据表格</cite></a>
+      <a><cite>数据操作</cite></a>
+    </div>
+  </div>
+  
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <div class="layui-card-header">数据操作</div>
+          <div class="layui-card-body">
+            <table class="layui-hide" id="test-table-operate" lay-filter="test-table-operate"></table>
+            <script type="text/html" id="test-table-operate-barDemo">
+              <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">修改状态</a>
+              <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+              <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../../../layuiadmin/layui/layui.js"></script>  
+  <script>
+  layui.config({
+    base: '../../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table'], function(){
+    var table = layui.table
+    ,admin = layui.admin;
+  
+    table.render({
+      elem: '#test-table-operate'
+      ,url:  '/getSlideshowList'
+      ,width: admin.screen() > 1 ? 1400 : ''
+      ,height: 332
+      ,toolbar:true
+      ,cols: [[
+        {type:'checkbox', fixed: 'left'}
+        ,{field:'id', width:80, title: 'ID', sort: true, fixed: 'left'}
+        ,{field:'platformImageName', width:150, title: '平台图像名称'}
+        ,{field:'statusName', width:80, title: '状态'}
+        ,{field:'serialNumber', width:80, title: '序号'}
+        ,{field:'creatTime', width:140, title: '创建时间'}
+        ,{field:'platformImageDesc', width:180, title: '平台图片描述' }
+        ,{field:'platformImageUri', width:185, title: '平台图片路径'}
+        ,{field:'deleteFlag', width:80, title: '删除标记'}
+        ,{title: '操作',align:'center', fixed: 'right', toolbar: '#test-table-operate-barDemo'}
+      ]]
+      ,page: true
+    });
+    
+    //监听表格复选框选择
+    table.on('checkbox(test-table-operate)', function(obj){
+      console.log(obj)
+    });
+    //监听工具条
+    table.on('tool(test-table-operate)', function(obj){
+      var data = obj.data;
+      if(obj.event === 'detail'){
+        layer.msg('ID：'+ data.id + ' 的查看操作');
+      } else if(obj.event === 'del'){
+        layer.confirm('真的删除行么', function(index){
+          obj.del();
+          layer.close(index);
+        });
+      } else if(obj.event === 'edit'){
+        layer.alert('编辑行：<br>'+ JSON.stringify(data))
+      }
+    });
+    
+    var $ = layui.$, active = {
+      getCheckData: function(){ //获取选中数据
+        var checkStatus = table.checkStatus('test-table-operate')
+        ,data = checkStatus.data;
+        layer.alert(JSON.stringify(data));
+      }
+      ,getCheckLength: function(){ //获取选中数目
+        var checkStatus = table.checkStatus('test-table-operate')
+        ,data = checkStatus.data;
+        layer.msg('选中了：'+ data.length + ' 个');
+      }
+      ,isAll: function(){ //验证是否全选
+        var checkStatus = table.checkStatus('test-table-operate');
+        layer.msg(checkStatus.isAll ? '全选': '未全选')
+      }
+    };
+    
+    $('.test-table-operate-btn .layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+  
+  });
+  </script>
+</body>
+</html>
